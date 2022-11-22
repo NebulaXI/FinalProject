@@ -1,0 +1,78 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img src="/Images/login.jpg"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card-body p-md-5 text-black">
+                                <form id="registerForm"  method="post">
+                                <h3 class="mb-5 text-uppercase">User registration</h3>
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="row">
+                                    <div class="form-outline mb-4">
+                                        <input asp-for="FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
+                                        <label asp-for="FirstName"></label>
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input asp-for="LastName" class="form-control" autocomplete="lastname" aria-required="true" />
+                                        <label asp-for="LastName"></label>
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input asp-for="Username" class="form-control" autocomplete="username" aria-required="true" />
+                                        <label asp-for="Username"></label>
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input asp-for="Email" class="form-control" autocomplete="email" aria-required="true" />
+                                        <label asp-for="Email"></label>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input asp-for="Password" class="form-control" autocomplete="password" aria-required="true" />
+                                        <label asp-for="Password"></label>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input asp-for="PasswordConfirmed" class="form-control" autocomplete="passwordConfirmed" aria-required="true" />
+                                        <label asp-for="PasswordConfirmed">Confirm password</label>
+                                        <span asp-validation-for="PasswordConfirmed" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                         <input asp-for="Birthdate" type="date" min="1910-01-01" class="hasDatepicker" autocomplete="passwordConfirmed" aria-required="true" />
+                                         <label asp-for="Birthdate"></label>
+                                         <span asp-validation-for="Birthdate" class="text-danger"></span>
+                                    </div>
+
+                                        <div class="d-flex justify-content-end pt-3">
+                                        <button type="button" class="btn btn-light btn-lg">Reset all</button>
+                                        <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>
+                                        </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
