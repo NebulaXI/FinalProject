@@ -13,6 +13,8 @@ namespace SkiProject.Infrastructure.Data.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; } = null!;
-        public IEnumerable<PlaceToStay> PlacesToStay { get; set; } = new List<PlaceToStay>();
+        public IEnumerable<PlaceToStay>? PlacesToStay { get; set; } = new List<PlaceToStay>();
+        public Slope? Slope { get; set; }
+        public string WebCamera { get; set; }=null!;
     }
 }

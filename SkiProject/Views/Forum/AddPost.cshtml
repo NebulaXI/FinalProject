@@ -1,0 +1,13 @@
+﻿@model PostViewModel
+<form asp-controller="Forum" asp-action="AddPost" method="get">
+
+    <div class="col-6">
+        <label asp-for="Content"></label>
+        <input asp-for="Content" class="form-control" />
+        <span asp-validation-for="Content" class="small text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success mt-2" onclick="location.href='@Url.Action("AddPost(PostViewModel model)", "Forum")'">Post</button>
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

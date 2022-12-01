@@ -9,24 +9,27 @@ using System.Threading.Tasks;
 
 namespace SkiProject.Infrastructure.Data.Models
 {
-    public class PlaceToStay
+    public class Slope
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = null!;
-        [Required]
-        public int CityId { get; set; }
 
+        public int CityId { get; set; }
         [ForeignKey(nameof(CityId))]
         public City? City { get; set; }
-        [Required]
-        public int Capacity { get; set; }
+
         [Required]
         [Precision(18,2)]
-        public decimal PricePerNightForAPerson { get; set; }
-
-        public IEnumerable<Reservation>? Reservations { get; set; } = new List<Reservation>();
+        public decimal PricePerDayChildren { get; set; }
+        [Required]
+        [Precision(18, 2)]
+        public decimal PricePerDayAdult { get; set; }
+        [Required]
+        [Precision(18, 2)]
+        public decimal PriceForSeasonChildren { get; set; }
+        [Required]
+        [Precision(18, 2)]
+        public decimal PriceForSeasonAdult { get; set; }
 
     }
 }

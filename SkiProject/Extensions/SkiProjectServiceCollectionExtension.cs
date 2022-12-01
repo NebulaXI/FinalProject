@@ -17,6 +17,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICardService, CardService>();
+            services.AddScoped<IResortService, ResortService>();
+            services.AddScoped<IPostService, PostService>();
 
             return services;
         }

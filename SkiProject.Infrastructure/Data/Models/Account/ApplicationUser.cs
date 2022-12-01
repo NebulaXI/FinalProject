@@ -35,7 +35,7 @@ namespace SkiProject.Infrastructure.Data.Models.Account
         public DateTime Birthday { get; set; }
 
         [Required]
-        [MaxLength(UsernameMax)]
+        [MaxLength(UsernameMax,ErrorMessage ="Username cannot be more than 30 characters.")]
 
         public override string UserName { get; set; } = null!;
         [Required]
@@ -47,6 +47,9 @@ namespace SkiProject.Infrastructure.Data.Models.Account
 
         public Wallet? Wallet { get; set; }
 
-        public IEnumerable<Reservation> Reservations { get; set; }
+        public IEnumerable<Reservation>? Reservations { get; set; }
+        public IEnumerable<Post>? Posts { get; set; }
+        public IEnumerable<ForumTopic>? CreatedTopics { get; set; }
+
     }
 }

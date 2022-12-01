@@ -1,0 +1,94 @@
+﻿@model ResortViewModel
+
+@if (Model.Name=="Bansko")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Day pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular day pass</th>
+                <th scope="col">Season pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular season pass</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                    <th scope="row">@Model.Name</th>
+                    <td>@Model.Slope.PricePerDayChildren</td>
+                    <td>@Model.Slope.PricePerDayAdult</td>
+                    <td>@Model.Slope.PriceForSeasonChildren</td>
+                    <td>@Model.Slope.PriceForSeasonAdult</td>
+                </tr>
+        </tbody>
+    </table>
+}
+else if(Model.Name=="Borovets")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Day pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular day pass</th>
+                <th scope="col">Season pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular season pass</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.Name</th>
+                <td>@Model.Slope.PricePerDayChildren</td>
+                <td>@Model.Slope.PricePerDayAdult</td>
+                <td>@Model.Slope.PriceForSeasonChildren</td>
+                <td>@Model.Slope.PriceForSeasonAdult</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else if(Model.Name=="Pamporovo")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Day pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular day pass</th>
+                <th scope="col">Season pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular season pass</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.Name</th>
+                <td>@Model.Slope.PricePerDayChildren</td>
+                <td>@Model.Slope.PricePerDayAdult</td>
+                <td>@Model.Slope.PriceForSeasonChildren</td>
+                <td>@Model.Slope.PriceForSeasonAdult</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else if(Model.Name=="Panichishte")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Day pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular day pass</th>
+                <th scope="col">Season pass(kids under 7y and adultes over 60y)</th>
+                <th scope="col">Regular season pass</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.Name</th>
+                <td>@Model.Slope.PricePerDayChildren</td>
+                <td>@Model.Slope.PricePerDayAdult</td>
+                <td>@Model.Slope.PriceForSeasonChildren</td>
+                <td>@Model.Slope.PriceForSeasonAdult</td>
+            </tr>
+        </tbody>
+    </table>
+}

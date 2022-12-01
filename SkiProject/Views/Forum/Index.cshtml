@@ -1,0 +1,11 @@
+﻿@model PostViewModel
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action active">
+        Forum Topics
+    </a>
+    @foreach (var item in Model.Topics)
+    {
+        @*<a asp-controller="Forum" asp-action="GetAllPosts(@item.Title)" class="list-group-item list-group-item-action">@item.Title</a>*@
+        <a class="list-group-item list-group-item-action" href="@Url.Action("GetAllPosts","Forum", new {title=item.Title})">@item.Title</a>
+    }
+</div>

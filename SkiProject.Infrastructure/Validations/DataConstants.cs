@@ -20,5 +20,15 @@ namespace SkiProject.Infrastructure.Validations
         {
             public const int MaxCardHolderName = 50;
         }
+
+        public class Post
+        {
+            public const int ContentMaxLength = 3500;
+        }
+
+        public class ForumTopic
+        {
+            public const int TitleMaxLength = 100;
+        }
     }
 }

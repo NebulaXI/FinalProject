@@ -1,0 +1,11 @@
+﻿@model PostViewModel
+<div class="container">
+    <div>
+       
+            @foreach (var post in Model.Posts)
+            {
+                <p>@post.Content</p>
+            }
+        @Html.Partial("AddPost");
+    </div>
+</div>

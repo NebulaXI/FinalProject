@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiProject.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SkiProject.Infrastructure.Data;
 namespace SkiProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221124082112_seedSlopes")]
+    partial class seedSlopes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,10 +318,6 @@ namespace SkiProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebCamera")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
@@ -328,74 +326,22 @@ namespace SkiProject.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Bansko",
-                            WebCamera = "https://www.banskoski.com/bg/webcams"
+                            Name = "Bansko"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Borovets",
-                            WebCamera = "https://www.borovets-bg.com/en/page/info/lifts-trails/weather-webcams-avalanche-warning"
+                            Name = "Borovets"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Pamporovo",
-                            WebCamera = "http://free-webcambg.com/Pamporovo-07-webcam-live-online-camera-ski-tv-Snejanka-kameri-na-jivo-vremeto-weather.htm"
+                            Name = "Pamporovo"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Panichishte",
-                            WebCamera = "http://free-webcambg.com/Rilski-ezera-02-webcam-live-online-camera-hija-Pionerska-Panichishte-Rila-kameri-na-jivo-vremeto-weather.htm"
-                        });
-                });
-
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.ForumTopic", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedByUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
-
-                    b.ToTable("Topics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3153),
-                            LastUpdated = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3198),
-                            Title = "First topic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3201),
-                            LastUpdated = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3203),
-                            Title = "Second topic"
+                            Name = "Panichishte"
                         });
                 });
 
@@ -426,162 +372,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("PlaceToStays");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 300,
-                            CityId = 1,
-                            Name = "Hotel Mura",
-                            PricePerNightForAPerson = 150.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 300,
-                            CityId = 1,
-                            Name = "Hotel Saint George",
-                            PricePerNightForAPerson = 110.00m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 300,
-                            CityId = 1,
-                            Name = "Evergreen",
-                            PricePerNightForAPerson = 140.00m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Capacity = 300,
-                            CityId = 2,
-                            Name = "Hotel Lion",
-                            PricePerNightForAPerson = 150.00m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Capacity = 230,
-                            CityId = 2,
-                            Name = "Hotel Iglika",
-                            PricePerNightForAPerson = 120.00m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Capacity = 120,
-                            CityId = 2,
-                            Name = "Hotel Breza",
-                            PricePerNightForAPerson = 80.00m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Capacity = 70,
-                            CityId = 3,
-                            Name = "Complex Malina",
-                            PricePerNightForAPerson = 120.00m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Capacity = 230,
-                            CityId = 3,
-                            Name = "Hotel Snezhanka",
-                            PricePerNightForAPerson = 160.00m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Capacity = 250,
-                            CityId = 3,
-                            Name = "Hotel Perelik",
-                            PricePerNightForAPerson = 140.00m
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Capacity = 40,
-                            CityId = 4,
-                            Name = "Hotel Magnoliya",
-                            PricePerNightForAPerson = 30.00m
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Capacity = 170,
-                            CityId = 4,
-                            Name = "103 Alpine Hotel",
-                            PricePerNightForAPerson = 100.00m
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Capacity = 90,
-                            CityId = 4,
-                            Name = "Hotel Panorama",
-                            PricePerNightForAPerson = 60.00m
-                        });
-                });
-
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(3500)
-                        .HasColumnType("nvarchar(3500)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TopicId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Posts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "1 topic,1 comment",
-                            Date = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3282),
-                            TopicId = 1,
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Content = "1 topic,2 comment",
-                            Date = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3287),
-                            TopicId = 1,
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Content = "2 topic,1 comment",
-                            Date = new DateTime(2022, 11, 28, 8, 19, 21, 84, DateTimeKind.Local).AddTicks(3289),
-                            TopicId = 2,
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        });
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Reservation", b =>
@@ -775,17 +565,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.ForumTopic", b =>
-                {
-                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "CreatedByUser")
-                        .WithMany("CreatedTopics")
-                        .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-                });
-
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.PlaceToStay", b =>
                 {
                     b.HasOne("SkiProject.Infrastructure.Data.Models.City", "City")
@@ -795,25 +574,6 @@ namespace SkiProject.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
-                });
-
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Post", b =>
-                {
-                    b.HasOne("SkiProject.Infrastructure.Data.Models.ForumTopic", "Topic")
-                        .WithMany("Posts")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Topic");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Reservation", b =>
@@ -850,10 +610,6 @@ namespace SkiProject.Infrastructure.Migrations
                 {
                     b.Navigation("BankCard");
 
-                    b.Navigation("CreatedTopics");
-
-                    b.Navigation("Posts");
-
                     b.Navigation("Reservations");
 
                     b.Navigation("Wallet");
@@ -864,11 +620,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Navigation("PlacesToStay");
 
                     b.Navigation("Slope");
-                });
-
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.ForumTopic", b =>
-                {
-                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.PlaceToStay", b =>
