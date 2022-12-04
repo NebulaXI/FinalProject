@@ -17,6 +17,11 @@ namespace SkiProject.Core.Contracts
         Task<Post> CreateNewPost(PostViewModel model);
         Task<ForumTopic> GetCurrentTopic(string topicTitle);
         Task AddNewPost(Post post);
+        Task<ForumTopic> CreateTopic(NewTopicViewModel model);
+        Task AddNewTopic(ForumTopic topic);
+        Task<List<ForumTopic>> GetTopicsToDelete(string userId);
+        Task<List<ForumTopic>> DeleteCurrentTopic(ForumTopic topic);
+        Task<ForumTopic> GetCurrentTopicById(int id);
 
     }
 }

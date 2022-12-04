@@ -21,7 +21,8 @@ namespace SkiProject.Infrastructure.Configuration
                 Title = "First topic",
                 CreatedOn = DateTime.Now,
                 LastUpdated = DateTime.Now,
-                CreatedByUserId= "d33b5866-1720-4e84-bfba-977e3a864f86"
+                CreatedByUserId= "d33b5866-1720-4e84-bfba-977e3a864f86",
+                CommentsCount= 3,
             };
             topics.Add(firstTopic);
             var secondTopic = new ForumTopic()
@@ -30,7 +31,8 @@ namespace SkiProject.Infrastructure.Configuration
                 Title = "Second topic",
                 CreatedOn = DateTime.Now,
                 LastUpdated = DateTime.Now,
-                CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
+                CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
+                CommentsCount=1
             };
             topics.Add(secondTopic);
 

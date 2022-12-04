@@ -1,4 +1,5 @@
 ﻿@model PostViewModel
+
 <div class="container">
     <div>
        
@@ -6,6 +7,19 @@
             {
                 <p>@post.Content</p>
             }
-        @Html.Partial("AddPost");
+
+        <form asp-controller="Forum" asp-action="AddPost" method="post">
+            <input type="hidden" name="currentTopicTitle" value="@Model.CurrentTopic" />
+            <div class="col-6">
+                <label asp-for="Content">Post</label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="small text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Post</button>
+        </form>
+        
     </div>
 </div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+        }

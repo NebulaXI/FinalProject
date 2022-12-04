@@ -1,4 +1,5 @@
-﻿using SkiProject.Infrastructure.Data.Models.Account;
+﻿using Microsoft.EntityFrameworkCore;
+using SkiProject.Infrastructure.Data.Models.Account;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,11 +13,11 @@ namespace SkiProject.Infrastructure.Data.Models
 {
     public class ForumTopic
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        [MaxLength(TitleMaxLength,ErrorMessage ="The title of the topic cannot be more than 100 characters.")]
-        public string Title { get; set; }
+        [MaxLength(TitleMaxLength, ErrorMessage = "The title of the topic cannot be more than 100 characters.")]
+        public string Title { get; set; } = null!;
         public List<Post>? Posts { get; set; }
         [Required]
         public string? CreatedByUserId { get; set; }
@@ -27,5 +28,8 @@ namespace SkiProject.Infrastructure.Data.Models
         public DateTime CreatedOn { get; set; }
         [Required]
         public DateTime LastUpdated { get; set; }
+
+        [Required]
+        public int? CommentsCount { get; set; }
     }
 }

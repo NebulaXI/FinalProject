@@ -67,6 +67,8 @@ namespace SkiProject.Infrastructure.Data
                 .WithOne(s => s.CreatedByUser)
                 .HasForeignKey(f => f.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<ForumTopic>().HasIndex(u => u.Title).IsUnique();
+
             modelBuilder.ApplyConfiguration(new CityConfiguration());
             modelBuilder.ApplyConfiguration(new SlopeConfiguration());
             modelBuilder.ApplyConfiguration(new PlaceToStayConfiguration());

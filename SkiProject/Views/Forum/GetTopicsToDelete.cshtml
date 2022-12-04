@@ -1,0 +1,38 @@
+﻿@model TopicViewModel
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action active">
+        Forum Topics
+    </a>
+
+    @if (Model.Topics.Count==0)
+    {
+        
+            <p align="center">There is no topics you've created.</p>
+            <p align="center">You can delete only the topics you've created.</p>
+        
+    }
+    @foreach (var item in Model.Topics)
+    {
+        @if (item.CommentsCount > 1)
+        {
+            <div class="list-group-item list-group-item-action" href="@Url.Action("GetAllPosts","Forum", new {title=item.Title})">@item.Title (@item.CommentsCount comments) 
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" style="float: right;"
+                    onclick="location.href='@Url.Action("DeleteCurrentTopic", "Forum",new {id=item.Id})'">Delete
+                    </button>
+                 </div>
+            </div>
+        }
+        else
+        {
+           <div class="list-group-item list-group-item-action" href="@Url.Action("GetAllPosts","Forum", new {title=item.Title})">@item.Title (@item.CommentsCount comment)
+                <div class="input-group-append">
+                    <button  type="button" style="float: right;"
+                    onclick="location.href='@Url.Action("DeleteCurrentTopic", "Forum",new {id=item.Id})'">Delete
+                    </button>
+                </div>
+           </div>
+        }
+
+    }
+</div>

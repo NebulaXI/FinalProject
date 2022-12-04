@@ -23,9 +23,6 @@ namespace SkiProject.Core.Models
 
         public List<ForumTopic> Topics { get; set; }
         public List<Post> Posts { get; set; }
-
-        [MaxLength(3500, ErrorMessage = "Single post cannot be more than 3500 characters.")]
-        public string Content { get; set; }
-        public string CurrentTopic { get; set; }
+        public int CountOfComments { get; set; }
     }
 }

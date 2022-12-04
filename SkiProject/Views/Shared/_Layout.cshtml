@@ -6,7 +6,8 @@
     <title>@ViewData["Title"] - FinalProject</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FinalProject.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/homePage.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/FinalProject.styles.css" asp-append-version="true" />*@
     <link rel="icon" type="image/x-icon" href="/Images/favicon1.ico">
     <link rel="stylesheet" type="text/css" href="css/homePage.css" />
 </head>
@@ -37,7 +38,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Shop</a>
                             </li>
-                            
                         }
                         
                     </ul>
@@ -52,11 +52,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*<footer class="border-top footer text-muted">
         <div class="container">
             &copy; @DateTime.UtcNow.Year - FinalProject
         </div>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
