@@ -6,6 +6,7 @@ using System.Security.Claims;
 using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models;
 using SkiProject.Infrastructure.Configuration;
+using SkiProject.Infrastructure.Data.Models.Shop;
 
 namespace SkiProject.Infrastructure.Data
 
@@ -67,13 +68,28 @@ namespace SkiProject.Infrastructure.Data
                 .WithOne(s => s.CreatedByUser)
                 .HasForeignKey(f => f.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(g => g.CreatedAdvertisments)
+                .WithOne(s => s.User)
+                .HasForeignKey(f => f.UserId).OnDelete(DeleteBehavior.Cascade); 
+            
+            modelBuilder.Entity<Product>()
+                .HasMany(g => g.ProductImages)
+                .WithOne(s => s.Product)
+                .HasForeignKey(f => f.ProductId).OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<ForumTopic>().HasIndex(u => u.Title).IsUnique();
+            modelBuilder.Entity<Advertisment>().HasIndex(u => u.Title).IsUnique();
 
             modelBuilder.ApplyConfiguration(new CityConfiguration());
             modelBuilder.ApplyConfiguration(new SlopeConfiguration());
             modelBuilder.ApplyConfiguration(new PlaceToStayConfiguration());
             modelBuilder.ApplyConfiguration(new ForumTopicsConfiguration());
             modelBuilder.ApplyConfiguration(new PostConfiguration());
+            modelBuilder.ApplyConfiguration(new GenderConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new AdvertismentConfiguration());
 
             base.OnModelCreating(modelBuilder);
 
@@ -89,5 +105,10 @@ namespace SkiProject.Infrastructure.Data
         public DbSet<Slope> Slopes { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<ForumTopic> Topics { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<Advertisment> Advertisments { get; set; }
     }
 }

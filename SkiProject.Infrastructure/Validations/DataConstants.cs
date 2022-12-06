@@ -30,5 +30,16 @@ namespace SkiProject.Infrastructure.Validations
         {
             public const int TitleMaxLength = 100;
         }
+
+        public class Product
+        {
+            
+            public const int DescriptionMaxLength = 3500;
+        }
+
+        public class Advertisment
+        {
+            public const int AdvertismentTitleMaxLength = 100;
+        }
     }
 }

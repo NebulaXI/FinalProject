@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static SkiProject.Infrastructure.Validations.DataConstants.ApplicationUser;
 using SkiProject.Infrastructure.Data.Models.Account;
+using SkiProject.Infrastructure.Data.Models.Shop;
 
 namespace SkiProject.Infrastructure.Data.Models.Account
 {
@@ -50,6 +51,7 @@ namespace SkiProject.Infrastructure.Data.Models.Account
         public IEnumerable<Reservation>? Reservations { get; set; }
         public IEnumerable<Post>? Posts { get; set; }
         public IEnumerable<ForumTopic>? CreatedTopics { get; set; }
+        public IEnumerable<Advertisment>? CreatedAdvertisments { get; set; }
 
     }
 }

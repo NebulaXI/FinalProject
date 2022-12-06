@@ -1,0 +1,17 @@
+﻿using SkiProject.Infrastructure.Data.Models.Shop;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SkiProject.Core.Contracts
+{
+    public interface IShopService
+    {
+        Task<List<Advertisment>> GetAllAdvertisments();
+        Task<List<Product>> GetAllProducts();
+        Task<List<Category>> GetAllCategories();
+        Task<List<Gender>> GetAllGenders();
+    }
+}
