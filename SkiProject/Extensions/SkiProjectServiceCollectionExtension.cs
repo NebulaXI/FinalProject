@@ -14,9 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
-            services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<ICardService, CardService>();
             services.AddScoped<IResortService, ResortService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IShopService, ShopService>();

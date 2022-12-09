@@ -67,6 +67,14 @@ namespace SkiProject.Infrastructure.Data
                 .HasMany(g => g.ProductImages)
                 .WithOne(s => s.Product)
                 .HasForeignKey(f => f.ProductId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(g => g.SentMessages)
+                .WithOne(s => s.Receiver)
+                .HasForeignKey(f => f.ReceiverId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(g => g.ReceivedMessages)
+                .WithOne(s => s.Sender)
+                .HasForeignKey(f => f.SenderId).OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ForumTopic>().HasIndex(u => u.Title).IsUnique();
             modelBuilder.Entity<Advertisment>().HasIndex(u => u.Title).IsUnique();
@@ -98,5 +106,6 @@ namespace SkiProject.Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Advertisment> Advertisments { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

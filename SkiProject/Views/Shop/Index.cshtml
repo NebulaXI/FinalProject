@@ -21,7 +21,21 @@
             <a class="dropdown-item" value=@gender.NameOfGender href='@Url.Action("Index2", "Shop",new {value=gender.NameOfGender})'>@gender.NameOfGender</a>
         }
         </div>
+
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="search" id="form1" class="form-control" />
+            <label class="form-label" for="form1">Search</label>
+        </div>
+        <button type="button" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
+    </div>
+    <button type="submit" class="btn btn-success mt-2" style="float:right;"
+                    onclick="location.href='@Url.Action("CreateNewProduct", "Shop")'" )>
+                Add new advertisment
+     </button>
 
 <div id="divPartialView">
     <!-- something like this in your ASP.NET View -->

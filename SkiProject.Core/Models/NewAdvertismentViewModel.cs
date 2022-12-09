@@ -1,24 +1,23 @@
-﻿using SkiProject.Infrastructure.Data.Models.Account;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SkiProject.Infrastructure.Data.Models.Shop;
+
 using static SkiProject.Infrastructure.Validations.DataConstants.Advertisment;
+using SkiProject.Infrastructure.Data.Models.Account;
 
-namespace SkiProject.Infrastructure.Data.Models.Shop
+namespace SkiProject.Core.Models
 {
-    public class Advertisment
+    public class NewAdvertismentViewModel
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public int ProductId { get; set; }
         [ForeignKey(nameof(ProductId))]
-        public Product? Product { get; set; }
+        public Product Product { get; set; }
 
         [Required]
         [MaxLength(AdvertismentTitleMaxLength, ErrorMessage = "Title cannot be more than 100 characters.")]

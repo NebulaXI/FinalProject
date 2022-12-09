@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Ganss.Xss;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
+using SkiProject.Core.Services;
 using SkiProject.Infrastructure.Data.Models.Shop;
+using System.Security.Claims;
 using System.Web.Mvc;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
@@ -11,7 +14,7 @@ using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
 
 namespace SkiProject.Controllers
 {
-    
+
     public class ShopController : BaseController
     {
 
@@ -33,8 +36,8 @@ namespace SkiProject.Controllers
             //    items.Add(new SelectListItem() { Value = item.NameOfCategory });
             //}
             //ViewBag["CategoryName"] = items;
-            model.Advertisments = advretisments;model.Products = products; model.Categories = categories;model.Genders=genders; 
-            
+            model.Advertisments = advretisments; model.Products = products; model.Categories = categories; model.Genders = genders;
+
             return View(model);
         }
 
@@ -45,34 +48,56 @@ namespace SkiProject.Controllers
             var genders = await shopService.GetAllGenders();
             foreach (var item in genders)
             {
-                if (value==item.NameOfGender)
+                if (value == item.NameOfGender)
                 {
-                    model.Products= await shopService.ProductsFilteredByGender(value);
-                    model.Advertisments =await shopService.AdsFilteredByGender(value);
+                    model.Products = await shopService.ProductsFilteredByGender(value);
+                    model.Advertisments = await shopService.AdsFilteredByGender(value);
                     model.Categories = await shopService.GetAllCategories();
-                    model.Genders=genders;
+                    model.Genders = genders;
                     flag = false;
                 }
             }
             if (flag)
             {
-                model.Products =await shopService.ProductsFilteredByCategory(value);
-                model.Advertisments =await shopService.AdsFilteredByCategory(value);
+                model.Products = await shopService.ProductsFilteredByCategory(value);
+                model.Advertisments = await shopService.AdsFilteredByCategory(value);
                 model.Categories = await shopService.GetAllCategories();
                 model.Genders = genders;
             }
             return View("~/Views/Shop/Index.cshtml", model);
         }
-        
-        //[Route("/ProductsFromCategory")]
-        //[HttpPost]
-        //public async Task<IActionResult> GetProductsFromCategory(string categoryId)
-        //{
-        //    var id = int.Parse(categoryId);
-        //    var products = await shopService.GetAllProducts();
-        //    var filtered = products.Where(p => p.CategoryId == id).ToList();
 
-        //    return View()
+        [HttpGet]
+        public async Task<IActionResult> CreateNewProduct()
+        {
+            var model = new NewProductViewModel();
+            return View(model);
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateNewTopic(NewProductViewModel DTOModel)
+        //{
+        //    var sanitizer = new HtmlSanitizer();
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    var model = new NewProductViewModel()
+        //    {
+        //        CategoryId =,
+        //        Category =,
+        //        GenderId =,
+        //        Gender =,
+        //        Price =,
+        //        Description =,
+        //        ProductImages =
+        //    };
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+
+        //    var topic = await postService.CreateTopic(model);
+        //    await postService.AddNewTopic(topic);
+        //    return RedirectToAction("Index");
         //}
     }
 }

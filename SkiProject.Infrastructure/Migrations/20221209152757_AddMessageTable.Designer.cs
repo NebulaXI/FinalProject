@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiProject.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SkiProject.Infrastructure.Data;
 namespace SkiProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221209152757_AddMessageTable")]
+    partial class AddMessageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -329,8 +331,8 @@ namespace SkiProject.Infrastructure.Migrations
                             Id = 1,
                             CommentsCount = 3,
                             CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(516),
-                            LastUpdated = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(551),
+                            CreatedOn = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2084),
+                            LastUpdated = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2149),
                             Title = "First topic"
                         },
                         new
@@ -338,8 +340,8 @@ namespace SkiProject.Infrastructure.Migrations
                             Id = 2,
                             CommentsCount = 1,
                             CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(602),
-                            LastUpdated = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(604),
+                            CreatedOn = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2156),
+                            LastUpdated = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2158),
                             Title = "Second topic"
                         });
                 });
@@ -537,7 +539,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "1 topic,1 comment",
-                            Date = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(674),
+                            Date = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2230),
                             TopicId = 1,
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
                         },
@@ -545,7 +547,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 2,
                             Content = "1 topic,2 comment",
-                            Date = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(678),
+                            Date = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2235),
                             TopicId = 1,
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
                         },
@@ -553,7 +555,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 3,
                             Content = "2 topic,1 comment",
-                            Date = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(680),
+                            Date = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2237),
                             TopicId = 2,
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
                         });
@@ -615,9 +617,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<DateTime>("LastUpdatedOn")
                         .HasColumnType("datetime2");
 
@@ -648,8 +647,8 @@ namespace SkiProject.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(940),
-                            LastUpdatedOn = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(943),
+                            CreatedOn = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2561),
+                            LastUpdatedOn = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2564),
                             ProductId = 1,
                             Title = "Woman jacket",
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
@@ -657,8 +656,8 @@ namespace SkiProject.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(947),
-                            LastUpdatedOn = new DateTime(2022, 12, 9, 17, 55, 8, 360, DateTimeKind.Local).AddTicks(948),
+                            CreatedOn = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2568),
+                            LastUpdatedOn = new DateTime(2022, 12, 9, 17, 27, 56, 747, DateTimeKind.Local).AddTicks(2570),
                             ProductId = 2,
                             Title = "Men pants",
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"

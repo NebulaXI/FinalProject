@@ -16,14 +16,11 @@ namespace SkiProject.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly IWalletService walletService;
-
         public AccountController(UserManager<ApplicationUser> _userManager,
-            SignInManager<ApplicationUser> _signInManager,IWalletService _walletService)
+            SignInManager<ApplicationUser> _signInManager)
         {
             userManager = _userManager;
             signInManager = _signInManager;
-            walletService = _walletService;
         }
 
         [HttpGet]
@@ -65,7 +62,6 @@ namespace SkiProject.Controllers
             {
                 //isPersistent on the registration false, changes the cookie 
                 await signInManager.SignInAsync(user, isPersistent: false);
-                await walletService.Create(user.Id);
                
                 return RedirectToAction("Index", "Home");
             }
