@@ -7,9 +7,11 @@ using SkiProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Ganss.Xss;
 
 namespace SkiProject.Controllers
 {
+    
     public class AccountController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -24,26 +26,6 @@ namespace SkiProject.Controllers
             walletService = _walletService;
         }
 
-        /// <summary>
-        /// Check if there is already user with the same email and/or username
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-       
-        //[AllowAnonymous]
-        //public async Task UserAlreadyExistsAsync(RegisterViewModel model)
-        //{
-        //    var chekUsername = await userManager.FindByNameAsync(model.Username);
-        //    if (chekUsername != null)
-        //    {
-        //        StatusMessage = "User name already taken. Select a different username.";
-        //    }
-        //    var checkEmail = await userManager.FindByEmailAsync(model.Email);
-        //    if (checkEmail!=null)
-        //    {
-        //        StatusMessage = "There is already an user registered with the same email.";
-        //    }
-        //}
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -56,6 +38,7 @@ namespace SkiProject.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            var sanitizer = new HtmlSanitizer();            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -64,12 +47,13 @@ namespace SkiProject.Controllers
 
             var user = new ApplicationUser()
             {
-                Email = model.Email,
-                UserName = model.Username,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                
+                Email = sanitizer.Sanitize(model.Email),
+                UserName = sanitizer.Sanitize(model.Username),
+                FirstName =sanitizer.Sanitize (model.FirstName),
+                LastName =sanitizer.Sanitize( model.LastName),
                 EmailConfirmed = true,
-                Birthday = model.Birthdate
+                Birthday =model.Birthdate
             };
             //When creating user with password
             //If we are creating an user without a password=>(user)
@@ -110,16 +94,17 @@ namespace SkiProject.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            var sanitizer = new HtmlSanitizer();
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var user = await userManager.FindByNameAsync(model.Username);
+            var user = await userManager.FindByNameAsync(sanitizer.Sanitize(model.Username));
             if (user != null)
             {
 
-                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+                var result = await signInManager.PasswordSignInAsync(user,sanitizer.Sanitize( model.Password), false, false);
 
                 if (result.Succeeded)
                 {

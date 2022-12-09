@@ -1,72 +1,79 @@
 ﻿@model AdvertismentsViewModel
 
     <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="categoryDropDownList" >
+    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="ddlAjax">
             Category
         </button>
-        <div class="dropdown-menu">
+    <div class="dropdown-menu" >
             @foreach (var category in Model.Categories)
             {
-              <a class="dropdown-item" href="#">@category.NameOfCategory</a>
+            <a id="item" class="dropdown-item" value=@category.NameOfCategory onclick="location.href='@Url.Action("Index2", "Shop",new {value=category.NameOfCategory})'" ) >@category.NameOfCategory</a>
             }
         </div>
     </div>
     <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="ddlAjax" >
             Gender
         </button>
         <div class="dropdown-menu">
         @foreach (var gender in Model.Genders)
         {
-            <a class="dropdown-item" href="#">@gender.NameOfGender</a>
+            <a class="dropdown-item" value=@gender.NameOfGender href='@Url.Action("Index2", "Shop",new {value=gender.NameOfGender})'>@gender.NameOfGender</a>
         }
         </div>
     </div>
 
+<div id="divPartialView">
+    <!-- something like this in your ASP.NET View -->
+    @await Html.PartialAsync("~/Views/Shop/_IndexPartial.cshtml", Model)
+</div>
 
-
-    <div class="input-group">
-        <div class="form-outline">
-            <input type="search" id="form1" class="form-control" />
-            <label class="form-label" for="form1">Search</label>
-        </div>
-        <button type="button" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
-
-    <div class="row" id="productsWrapper">
-        @foreach (var item in Model.Advertisments)
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body" id="card">
-                        <h5 class="card-title">@item.Title</h5>
-                        @foreach (var product in Model.Products)
-                        {
-                            @if (product.Id == item.ProductId)
-                            {
-                                <p class="card-text">@product.Description.</p>
-                            }
-                        }
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-        }
+    
 
     @section Scripts
       {
-        <script >
-            $(function(){
-                $('#CategoryBtn').on('click',function(){
-                    $.getJSON('/Shop/ProductsFromCategory',function(data)){
-                        $('#productsWrapper').text(data.)
+        <script type="text/javascript">
+            $(function () {
+                var userInterfaceGroups;//undefined at first
+                $("#item").on('click',function (ev) {
+
+                    var item = $("#item").val();
+                    alert(select);
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("Index2", "Shop")',
+                        data: {value = item},
+                        dataType: "json",
+                    dataType: "html",
+
+                    success: function (data, textStatus, XMLHttpRequest) {
+                        $("#divPartialView").html(data); // HTML DOM replace
                     }
+                             error: function (xhr, status, error) {
+                    $("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                });
+
                 })
             })
-           
         </script>
+        //<script type="text/javascript">
+        //    // assuming you're using jQuery
+        //    $("#ddl").change(function (event) {
+        //        $.ajax({
+        //        url: '@Url.Action("Index", "Shop")',
+        //            data: { value = $(this).val() /* add other additional parameters */ },
+        //            cache: false,
+        //            type: "POST",
+        //            dataType: "html",
+
+        //            success: function (data, textStatus, XMLHttpRequest) {
+        //                $("#divPartialView").html(data); // HTML DOM replace
+        //            }
+        //             error: function (xhr, status, error) {
+        //            $("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+        //        });
+        //    });
+        //</script>
     }
         @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
        @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

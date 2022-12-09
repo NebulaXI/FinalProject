@@ -1,0 +1,35 @@
+﻿@model AdvertismentsViewModel
+<div class="input-group">
+    <div class="form-outline">
+        <input type="search" id="form1" class="form-control" />
+        <label class="form-label" for="form1">Search</label>
+    </div>
+    <button type="button" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+
+<div class="row" id="productsWrapper">
+    @if (Model.Advertisments.Count==0)
+    {
+        <p>Sorry,there isn't advertisments with these parameters'</p>
+    }
+    @foreach (var item in Model.Advertisments)
+    {
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body" id="card">
+                    <h5 class="card-title">@item.Title</h5>
+                    @foreach (var product in Model.Products)
+                    {
+                        @if (product.Id == item.ProductId)
+                        {
+                            <p class="card-text">@product.Description.</p>
+                        }
+                    }
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -16,10 +16,7 @@ namespace SkiProject.Infrastructure.Validations
             public const int UsernameMax = 30;
         }
 
-        public class UserBankCard
-        {
-            public const int MaxCardHolderName = 50;
-        }
+       
 
         public class Post
         {

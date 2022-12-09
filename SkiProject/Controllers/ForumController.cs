@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Ganss.Xss;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
@@ -34,6 +35,7 @@ namespace SkiProject.Controllers
 
         public async Task<IActionResult> DeleteCurrentTopic(int id)
         {
+
             var currentTopic = await postService.GetCurrentTopicById(id);
             await postService.DeleteCurrentTopic(currentTopic);
             return RedirectToAction("Index");
@@ -63,18 +65,19 @@ namespace SkiProject.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPost(PostViewModel DTOmodel,string currentTopicTitle)
         {
+            var sanitizer = new HtmlSanitizer();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var topicTitle = currentTopicTitle;
             var topic = await postService.GetCurrentTopic(topicTitle);
 
             var model = new PostViewModel()
             {
-                UserId = userId,
+                UserId =sanitizer.Sanitize( userId),
                 User = await postService.GetCurrentUser(userId),
                 Date = DateTime.Now,
                 Topic = topic,
                 TopicId = topic.Id,
-                Content=DTOmodel.Content,
+                Content=sanitizer.Sanitize(DTOmodel.Content),
                 CurrentTopic=topicTitle,
                 Posts= await postService.GetAllPosts(topicTitle)
             };
@@ -98,12 +101,13 @@ namespace SkiProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNewTopic(NewTopicViewModel DTOModel)
         {
+            var sanitizer = new HtmlSanitizer();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var model = new NewTopicViewModel()
             {
-                Title = DTOModel.Title,
-                Content = DTOModel.Content,
+                Title =sanitizer.Sanitize( DTOModel.Title),
+                Content =sanitizer.Sanitize( DTOModel.Content),
                 CreatedByUserId=userId,
                 CreatedByUser= await postService.GetCurrentUser(userId),
                 CreatedOn=DateTime.Now,
@@ -113,7 +117,7 @@ namespace SkiProject.Controllers
 
             if (!ModelState.IsValid)
             {
-                //return View(model);
+                return View(model);
             }
 
             var topic = await postService.CreateTopic(model);

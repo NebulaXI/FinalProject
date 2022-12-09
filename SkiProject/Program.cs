@@ -29,6 +29,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:RequiredLength");
 
 })
+    //.AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
@@ -36,6 +37,13 @@ builder.Services.AddControllersWithViews().AddMvcOptions(options =>
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 });
 builder.Services.AddApplicationServices();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Account/Login";
+    options.AccessDeniedPath = $"/Account/AccessDenied";
+    options.Cookie.SameSite = SameSiteMode.Strict;
+});
 
 var app = builder.Build();
 

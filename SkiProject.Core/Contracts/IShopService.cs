@@ -13,5 +13,9 @@ namespace SkiProject.Core.Contracts
         Task<List<Product>> GetAllProducts();
         Task<List<Category>> GetAllCategories();
         Task<List<Gender>> GetAllGenders();
+        Task<List<Advertisment>> AdsFilteredByCategory(string nameOfCategory);
+        Task<List<Advertisment>> AdsFilteredByGender(string nameOfGender);
+        Task<List<Product>> ProductsFilteredByGender(string nameOfGender);
+        Task<List<Product>> ProductsFilteredByCategory(string nameOfCategory);
     }
 }

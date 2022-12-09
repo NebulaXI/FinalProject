@@ -21,16 +21,6 @@ namespace SkiProject.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ApplicationUser>()
-            .HasOne<UserBankCard>(s => s.BankCard)
-            .WithOne(ad => ad.User)
-            .HasForeignKey<UserBankCard>(ad => ad.UserId).OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<ApplicationUser>()
-            .HasOne<Wallet>(b => b.Wallet)
-            .WithOne(i => i.User)
-            .HasForeignKey<Wallet>(b => b.UserId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Wallet>().Property(a => a.AmountInWallet).HasPrecision(18, 2);
 
             modelBuilder.Entity<PlaceToStay>()
            .HasOne<City>(s => s.City)
@@ -97,8 +87,6 @@ namespace SkiProject.Infrastructure.Data
         }
 
         public DbSet<ApplicationUser> Users { get; set; }
-        public DbSet<UserBankCard> BankCards { get; set; }
-        public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<PlaceToStay> PlaceToStays { get; set; }

@@ -24,29 +24,25 @@ namespace SkiProject.Infrastructure.Data.Models.Account
 
         [Required]
         [MaxLength(UserMaxFirstName, ErrorMessage = "First name cannot be more than 40 characters.")]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; } 
 
 
         [Required]
         [MaxLength(UserMaxLastName, ErrorMessage = "Last name cannot be more than 45 characters.")]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
 
         [Required]
         [Column(TypeName = "datetime")]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [Required]
         [MaxLength(UsernameMax,ErrorMessage ="Username cannot be more than 30 characters.")]
 
-        public override string UserName { get; set; } = null!;
+        public override string? UserName { get; set; } 
         [Required]
         [EmailAddress]
-        public override string Email { get; set; }
+        public override string? Email { get; set; }
 
-        public UserBankCard? BankCard { get; set; }
-
-
-        public Wallet? Wallet { get; set; }
 
         public IEnumerable<Reservation>? Reservations { get; set; }
         public IEnumerable<Post>? Posts { get; set; }
