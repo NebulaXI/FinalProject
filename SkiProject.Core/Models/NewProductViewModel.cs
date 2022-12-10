@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SelectListItem = Microsoft.AspNetCore.Mvc.Rendering.SelectListItem;
+using static SkiProject.Infrastructure.Validations.DataConstants.Advertisment;
+using SkiProject.Infrastructure.Data.Models.Account;
 
 namespace SkiProject.Core.Models
 {
@@ -44,6 +46,19 @@ namespace SkiProject.Core.Models
         public string? Description { get; set; }
 
         public IEnumerable<Image>? ProductImages { get; set; }
-        public string CreatedByUserId { get; set; }
+        public string? CreatedByUserId { get; set; }
+
+
+
+        [Required]
+        [MaxLength(AdvertismentTitleMaxLength, ErrorMessage = "Title cannot be more than 100 characters.")]
+        public string Title { get; set; } = null!;
+
+
+        [ForeignKey(nameof(CreatedByUserId))]
+        public ApplicationUser? User { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+        public DateTime LastUpdatedOn { get; set; }
     }
 }

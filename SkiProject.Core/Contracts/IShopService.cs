@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using SkiProject.Core.Models;
+using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,11 @@ namespace SkiProject.Core.Contracts
         Task<List<SelectListItem>> CreateSelectListItemGender();
         Task<Product> CreateProduct(NewProductViewModel model);
         Task AddNewProduct(Product product);
+        Task<Product> GetLastProductByUserId(string userId);
+        Task<ApplicationUser> GetCurrentUser(string id);
+        Task<Advertisment> CreateAdvertisment(NewProductViewModel model,Product product);
+        Task AddNewAdvetisment(Advertisment advertisment);
+        Task<Advertisment> GetAdvertismentById(int id);
+        Task<Product> GetProductById(int id);
     }
 }

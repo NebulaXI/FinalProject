@@ -19,7 +19,10 @@
                             <p class="card-text">@product.Description.</p>
                         }
                     }
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <button class="btn btn-outline-secondary" type="button" style="float: right;"
+                        onclick="location.href='@Url.Action("ShowAdvertisment", "Shop",new {AdvertismentId=item.Id})'">
+                        View
+                    </button>
                 </div>
             </div>
         </div>

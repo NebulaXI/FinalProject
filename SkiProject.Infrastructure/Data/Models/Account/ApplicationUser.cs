@@ -47,10 +47,10 @@ namespace SkiProject.Infrastructure.Data.Models.Account
         public IEnumerable<Reservation>? Reservations { get; set; }
         public IEnumerable<Post>? Posts { get; set; }
         public IEnumerable<ForumTopic>? CreatedTopics { get; set; }
-        public IEnumerable<Advertisment>? CreatedAdvertisments { get; set; }
+        public List<Product>? CreatedProducts { get; set; }
+        public List<Advertisment>? CreatedAdvertisments { get; set; }
         public IEnumerable<Message>? SentMessages { get; set; }
         public IEnumerable<Message>? ReceivedMessages { get; set; }
-        public IEnumerable<Product>? CreatedProducts { get; set; }
 
     }
 }

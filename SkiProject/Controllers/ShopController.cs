@@ -5,6 +5,10 @@ using SkiProject.Core.Models;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.StaticFiles.Infrastructure;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
+using SkiProject.Core.Services;
 
 namespace SkiProject.Controllers
 {
@@ -75,7 +79,7 @@ namespace SkiProject.Controllers
             foreach (var file in Request.Form.Files)
             {
                 Image img = new Image();
-                //img.ImageTitle = file.FileName;
+                img.ImageName = file.FileName;
 
                 MemoryStream ms = new MemoryStream();
                 file.CopyTo(ms);
@@ -101,7 +105,11 @@ namespace SkiProject.Controllers
                 Price =Decimal.Parse(sanitizedPrice),
                 Description =sanitizer.Sanitize(DTOModel.Description),
                 ProductImages =images,
-                CreatedByUserId=userId
+                CreatedByUserId=userId,
+                Title=sanitizer.Sanitize(DTOModel.Title),
+                User=await shopService.GetCurrentUser(userId),
+                CreatedOn=DateTime.Now,
+                LastUpdatedOn=DateTime.Now
             };
             foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors)) { int a =5; }
             if (!ModelState.IsValid)
@@ -110,8 +118,35 @@ namespace SkiProject.Controllers
             }
 
             var product = await shopService.CreateProduct(model);
+            var advertisment = await shopService.CreateAdvertisment(model,product);
             await shopService.AddNewProduct(product);
-            return RedirectToAction("CreateAdvertisment");
+            await shopService.AddNewAdvetisment(advertisment);
+            return RedirectToAction("Index","Shop");
         }
+
+        public async Task<IActionResult> ShowAdvertisment(int AdvertismentId)
+        {
+            var ad = await shopService.GetAdvertismentById(AdvertismentId);
+            var product = await shopService.GetProductById(ad.ProductId);
+            var model = new ShowAdvertismentViewModel()
+            {
+                CategoryId = product.CategoryId,
+                Category = product.Category,
+                GenderId = product.GenderId,
+                Gender = product.Gender,
+                Price = product.Price,
+                Description = product.Description,
+                ProductImages = product.ProductImages,
+                CreatedByUserId = product.CreatedByUserId,
+                Title = ad.Title,
+                User = ad.User,
+                CreatedOn = ad.CreatedOn,
+                LastUpdatedOn = ad.LastUpdatedOn
+            };
+
+            return View(model);
+        }
+
+        
     }
 }

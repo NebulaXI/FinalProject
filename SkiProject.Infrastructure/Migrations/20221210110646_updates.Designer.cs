@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiProject.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SkiProject.Infrastructure.Data;
 namespace SkiProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221210110646_updates")]
+    partial class updates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -329,8 +331,8 @@ namespace SkiProject.Infrastructure.Migrations
                             Id = 1,
                             CommentsCount = 3,
                             CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(1994),
-                            LastUpdated = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2030),
+                            CreatedOn = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8191),
+                            LastUpdated = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8225),
                             Title = "First topic"
                         },
                         new
@@ -338,8 +340,8 @@ namespace SkiProject.Infrastructure.Migrations
                             Id = 2,
                             CommentsCount = 1,
                             CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2034),
-                            LastUpdated = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2035),
+                            CreatedOn = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8230),
+                            LastUpdated = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8231),
                             Title = "Second topic"
                         });
                 });
@@ -537,7 +539,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "1 topic,1 comment",
-                            Date = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2099),
+                            Date = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8301),
                             TopicId = 1,
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
                         },
@@ -545,7 +547,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 2,
                             Content = "1 topic,2 comment",
-                            Date = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2104),
+                            Date = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8305),
                             TopicId = 1,
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
                         },
@@ -553,7 +555,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 3,
                             Content = "2 topic,1 comment",
-                            Date = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2105),
+                            Date = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(8307),
                             TopicId = 2,
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
                         });
@@ -648,8 +650,8 @@ namespace SkiProject.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2369),
-                            LastUpdatedOn = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2372),
+                            CreatedOn = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(9291),
+                            LastUpdatedOn = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(9297),
                             ProductId = 1,
                             Title = "Woman jacket",
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
@@ -657,8 +659,8 @@ namespace SkiProject.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2376),
-                            LastUpdatedOn = new DateTime(2022, 12, 10, 16, 26, 23, 944, DateTimeKind.Local).AddTicks(2377),
+                            CreatedOn = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(9302),
+                            LastUpdatedOn = new DateTime(2022, 12, 10, 13, 6, 45, 265, DateTimeKind.Local).AddTicks(9304),
                             ProductId = 2,
                             Title = "Men pants",
                             UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
@@ -802,12 +804,14 @@ namespace SkiProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(3500)
@@ -822,9 +826,9 @@ namespace SkiProject.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("CreatedByUserId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("GenderId");
 
@@ -1082,16 +1086,14 @@ namespace SkiProject.Infrastructure.Migrations
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Product", b =>
                 {
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", null)
+                        .WithMany("CreatedProducts")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("SkiProject.Infrastructure.Data.Models.Shop.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
-                        .WithMany("CreatedProducts")
-                        .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SkiProject.Infrastructure.Data.Models.Shop.Gender", "Gender")
@@ -1103,8 +1105,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Gender");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Slope", b =>

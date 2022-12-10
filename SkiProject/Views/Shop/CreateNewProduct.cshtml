@@ -1,46 +1,5 @@
 ﻿@model NewProductViewModel
-@*
-<form asp-controller="Forum" asp-action="CreateNewProduct" method="post">
-    
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="ddlAjax">
-            Category
-        </button>
-        <div class="dropdown-menu">
-            @foreach (var category in Model.Categories)
-            {
-                <a id="item" class="dropdown-item" @Model.Category.Id=@category.Id value=@category.NameOfCategory >@category.NameOfCategory</a>
-            }
-        </div>
-    </div>
-    <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="ddlAjax">
-            Gender
-        </button>
-        <div class="dropdown-menu">
-            @foreach (var gender in Model.Genders)
-            {
-                <a class="dropdown-item" @Model.Gender=@gender.NameOfGender value=@gender.NameOfGender href='@Url.Action("Index2", "Shop",new {value=gender.NameOfGender})'>@gender.NameOfGender</a>
-            }
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="Price">Price</label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="small text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description">Content</label>
-        <textarea asp-for="Description" class="form-control" aria-label="With textarea"></textarea>
-        <span asp-validation-for="Description" class="small text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="ProductImages" class="form-label">Multiple files input example</label>
-        <input asp-for="ProductImages"class="form-control" type="file" id="formFileMultiple" multiple>
-    </div>
-    <button type="submit" class="btn btn-success mt-2">Next</button>
-</form>*@
 
 @using (Html.BeginForm("CreateNewProduct", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -48,6 +7,11 @@
     @Html.HiddenFor(m=>m.SelectedCategoryText,new{@id="SelectedCategoryText"})
     @Html.DropDownListFor(m=>m.SelectedGender , Model.Genders, "Select Category",new{@id="SelectedGender"})
     @Html.HiddenFor(m=>m.SelectedGenderText,new{@id="SelectedGenderText"})
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="small text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="Price">Price</label>
         <input asp-for="Price" class="form-control" />
@@ -65,15 +29,7 @@
 
     <button type="submit" class="btn btn-success mt-2">Next</button>
     }
-<form asp-action="CreateNewProduct"
-      asp-controller="Shop"
-      method="post"
-      enctype="multipart/form-data">
-    <input type="file" id="file1"
-           name="file1"
-           multiple="multiple" />
-    <button type="submit">Upload File(s)</button>
-</form>
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript">

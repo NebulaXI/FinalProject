@@ -17,10 +17,9 @@ namespace SkiProject.Infrastructure.Data.Models.Shop
 
         public byte[] ImageData { get; set; }
 
-        [Required]
-        public int ProductId { get; set; }
-        [ForeignKey(nameof(ProductId))]
-        public Product Product { get; set; }
+        //public int? ProductId { get; set; }
+        //[ForeignKey(nameof(ProductId))]
+        //public Product? Product { get; set; }
 
     }
 }

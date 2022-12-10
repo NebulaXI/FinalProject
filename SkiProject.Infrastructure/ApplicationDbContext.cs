@@ -61,12 +61,19 @@ namespace SkiProject.Infrastructure.Data
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(g => g.CreatedAdvertisments)
                 .WithOne(s => s.User)
-                .HasForeignKey(f => f.UserId).OnDelete(DeleteBehavior.Cascade); 
-            
+                .HasForeignKey(f => f.UserId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(g => g.CreatedProducts)
+                .WithOne(s => s.User)
+                .HasForeignKey(f => f.CreatedByUserId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Product>()
-                .HasMany(g => g.ProductImages)
-                .WithOne(s => s.Product)
-                .HasForeignKey(f => f.ProductId).OnDelete(DeleteBehavior.Cascade);
+                .HasOne(u => u.User)
+                .WithMany(a => a.CreatedProducts)
+                .HasForeignKey(k => k.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Product>()
+            //    .HasMany(g => g.ProductImages)
+            //    .WithOne(s => s.Product)
+            //    .HasForeignKey(f => f.ProductId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(g => g.SentMessages)
                 .WithOne(s => s.Receiver)

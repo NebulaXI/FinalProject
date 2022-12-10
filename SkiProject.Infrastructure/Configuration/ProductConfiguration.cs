@@ -20,7 +20,8 @@ namespace SkiProject.Infrastructure.Configuration
                 CategoryId = 1,
                 GenderId = 2,
                 Price = 120.0M,
-                Description = "Woman jacket"
+                Description = "Woman jacket",
+                CreatedByUserId= "d33b5866-1720-4e84-bfba-977e3a864f86"
             };
             products.Add(product1);
             var product2 = new Product()
@@ -29,7 +30,8 @@ namespace SkiProject.Infrastructure.Configuration
                 CategoryId = 2,
                 GenderId = 3,
                 Price = 80.0M,
-                Description = "Men pants"
+                Description = "Men pants",
+                CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
             };
             products.Add(product2);
             return products;

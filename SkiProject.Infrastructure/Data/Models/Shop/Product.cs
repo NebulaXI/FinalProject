@@ -38,6 +38,8 @@ namespace SkiProject.Infrastructure.Data.Models.Shop
         public string? Description { get; set; }
 
         public IEnumerable<Image>? ProductImages { get; set; }
-        public string CreatedByUserId { get; set; }
+        public string? CreatedByUserId { get; set; }
+        [ForeignKey(nameof(CreatedByUserId))]
+        public ApplicationUser User { get; set; }
     }
 }

@@ -156,17 +156,61 @@ namespace SkiProject.Core.Services
                 Price = model.Price,
                 Description = model.Description,
                 ProductImages = model.ProductImages,
-                CreatedByUserId=model.CreatedByUserId
+                CreatedByUserId=model.CreatedByUserId,
+                User=model.User
             };
             return product;
         }
+        public async Task<Advertisment> CreateAdvertisment (NewProductViewModel model,Product product)
+        {
+
+            var advertisment = new Advertisment()
+            {
+                Product = product,
+                ProductId = product.Id,
+                User = model.User,
+                UserId = model.CreatedByUserId,
+                CreatedOn = model.CreatedOn,
+                LastUpdatedOn = model.LastUpdatedOn,
+                Image = product.ProductImages.Select(i => i.ImageData).FirstOrDefault(),
+                Title=model.Title
+            };
+            return advertisment;
+        }
         public async Task AddNewProduct(Product product)
         {
-            var user = await GetCurrentUser(product.CreatedByUserId);
-            var userProducts = user.CreatedProducts.ToList();
-            userProducts.Add(product);
             await repo.AddAsync(product);
             await repo.SaveChangesAsync();
+            
         }
+        public async Task AddNewAdvetisment(Advertisment advertisment)
+        {
+            await repo.AddAsync(advertisment);
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<Product> GetLastProductByUserId(string userId)
+        {
+            var products = repo.All<Product>().Where(u => u.CreatedByUserId == userId);
+            var lastProduct = products.Last();
+            return lastProduct;
+        }
+
+        public async Task<Advertisment> GetAdvertismentById(int id)
+        {
+            var ads = await GetAllAdvertisments();
+            var ad = ads.FirstOrDefault(g => g.Id == id);
+            return ad;
+        }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            var products = await GetAllProducts();
+            var product = products.FirstOrDefault(p => p.Id == id);
+            return product;
+        }
+
+
+        
     }
 }
