@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SkiProject.Core.Contracts;
+using SkiProject.Core.Models;
 using SkiProject.Infrastructure.Data.Common;
+using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
@@ -18,7 +21,11 @@ namespace SkiProject.Core.Services
             this.repo = _repo;
         }
 
-       
+        public async Task<ApplicationUser> GetCurrentUser(string id)
+        {
+            var user = repo.All<ApplicationUser>().FirstOrDefault(o => o.Id == id);
+            return user;
+        }
         public async Task<List<Advertisment>> GetAllAdvertisments()
         {
             var advertisments = await repo.All<Advertisment>().ToListAsync();
@@ -93,6 +100,73 @@ namespace SkiProject.Core.Services
             }
 
             return filteredAdvertisments;
+        }
+
+        public async Task<Category> GetCategoryById(int id)
+        {
+            var categories = await GetAllCategories();
+            var category = categories.FirstOrDefault(c => c.Id == id);
+            return category;
+        }
+
+        public async Task<Gender> GetGenderById(int id)
+        {
+            var genders = await GetAllGenders();
+            var gender = genders.FirstOrDefault(g => g.Id == id);
+            return gender;
+        }
+
+        public async Task<List<SelectListItem>> CreateSelectListItemCategory()
+        {
+            var cat = await GetAllCategories();
+            var categories = new List<SelectListItem>();
+            foreach (var item in cat)
+            {
+                categories.Add(new SelectListItem
+                {
+                    Text = item.NameOfCategory,
+                    Value = item.Id.ToString(),
+                });
+            }
+            return categories;
+        }
+        public async Task<List<SelectListItem>> CreateSelectListItemGender()
+        {
+            var gen = await GetAllGenders();
+            var genders = new List<SelectListItem>();
+            foreach (var item in gen)
+            {
+                genders.Add(new SelectListItem
+                {
+                    Text = item.NameOfGender,
+                    Value = item.Id.ToString()
+                });
+            }
+            return genders;
+        }
+
+        public async Task<Product> CreateProduct(NewProductViewModel model)
+        {
+            var product = new Product()
+            {
+                CategoryId = model.CategoryId,
+                Category = model.Category,
+                GenderId = model.GenderId,
+                Gender = model.Gender,
+                Price = model.Price,
+                Description = model.Description,
+                ProductImages = model.ProductImages,
+                CreatedByUserId=model.CreatedByUserId
+            };
+            return product;
+        }
+        public async Task AddNewProduct(Product product)
+        {
+            var user = await GetCurrentUser(product.CreatedByUserId);
+            var userProducts = user.CreatedProducts.ToList();
+            userProducts.Add(product);
+            await repo.AddAsync(product);
+            await repo.SaveChangesAsync();
         }
     }
 }

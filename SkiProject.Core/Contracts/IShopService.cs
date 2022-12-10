@@ -1,4 +1,6 @@
-﻿using SkiProject.Infrastructure.Data.Models.Shop;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SkiProject.Core.Models;
+using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +19,11 @@ namespace SkiProject.Core.Contracts
         Task<List<Advertisment>> AdsFilteredByGender(string nameOfGender);
         Task<List<Product>> ProductsFilteredByGender(string nameOfGender);
         Task<List<Product>> ProductsFilteredByCategory(string nameOfCategory);
+        Task<Category> GetCategoryById(int id);
+        Task<Gender> GetGenderById(int id);
+        Task<List<SelectListItem>> CreateSelectListItemCategory();
+        Task<List<SelectListItem>> CreateSelectListItemGender();
+        Task<Product> CreateProduct(NewProductViewModel model);
+        Task AddNewProduct(Product product);
     }
 }

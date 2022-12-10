@@ -1,16 +1,10 @@
 ﻿using Ganss.Xss;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
-using SkiProject.Core.Services;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System.Security.Claims;
-using System.Web.Mvc;
-using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
-using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using PartialViewResult = Microsoft.AspNetCore.Mvc.PartialViewResult;
-using ViewResult = Microsoft.AspNetCore.Mvc.ViewResult;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SkiProject.Controllers
 {
@@ -30,12 +24,6 @@ namespace SkiProject.Controllers
             var products = await shopService.GetAllProducts();
             var categories = await shopService.GetAllCategories();
             var genders = await shopService.GetAllGenders();
-            //List<SelectListItem> items = new List<SelectListItem>();
-            //foreach (var item in categories)
-            //{
-            //    items.Add(new SelectListItem() { Value = item.NameOfCategory });
-            //}
-            //ViewBag["CategoryName"] = items;
             model.Advertisments = advretisments; model.Products = products; model.Categories = categories; model.Genders = genders;
 
             return View(model);
@@ -70,34 +58,60 @@ namespace SkiProject.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateNewProduct()
         {
-            var model = new NewProductViewModel();
+            var categories = await shopService.CreateSelectListItemCategory();
+            var genders = await shopService.CreateSelectListItemGender();
+            var model = new NewProductViewModel() { Categories=categories,Genders=genders};
             return View(model);
         }
-        //[HttpPost]
-        //public async Task<IActionResult> CreateNewTopic(NewProductViewModel DTOModel)
-        //{
-        //    var sanitizer = new HtmlSanitizer();
-        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        [HttpPost]
+        public async Task<IActionResult> CreateNewProduct(NewProductViewModel DTOModel)
+        {
+            var sanitizer = new HtmlSanitizer();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var sanitizedPrice = sanitizer.Sanitize(DTOModel.Price.ToString());
+            var category = await shopService.GetCategoryById(int.Parse(DTOModel.SelectedCategory));
+            var gender = await shopService.GetGenderById(int.Parse(DTOModel.SelectedGender));
+            var images = new List<Image>();
+            foreach (var file in Request.Form.Files)
+            {
+                Image img = new Image();
+                //img.ImageTitle = file.FileName;
 
-        //    var model = new NewProductViewModel()
-        //    {
-        //        CategoryId =,
-        //        Category =,
-        //        GenderId =,
-        //        Gender =,
-        //        Price =,
-        //        Description =,
-        //        ProductImages =
-        //    };
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                img.ImageData = ms.ToArray();
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
+                ms.Close();
+                ms.Dispose();
 
-        //    var topic = await postService.CreateTopic(model);
-        //    await postService.AddNewTopic(topic);
-        //    return RedirectToAction("Index");
-        //}
+                images.Add(img);
+            }
+            var model = new NewProductViewModel()
+            {
+                CategoryId =int.Parse(DTOModel.SelectedCategory),
+                Category = category,
+                Categories = await shopService.CreateSelectListItemCategory(),
+                SelectedCategory =DTOModel.SelectedCategory,
+                SelectedCategoryText=category.NameOfCategory,
+                GenderId =int.Parse(DTOModel.SelectedGender),
+                Gender = gender,
+                Genders=await shopService.CreateSelectListItemGender(),
+                SelectedGender=DTOModel.SelectedGender,
+                SelectedGenderText= gender.NameOfGender,
+                Price =Decimal.Parse(sanitizedPrice),
+                Description =sanitizer.Sanitize(DTOModel.Description),
+                ProductImages =images,
+                CreatedByUserId=userId
+            };
+            foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors)) { int a =5; }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var product = await shopService.CreateProduct(model);
+            await shopService.AddNewProduct(product);
+            return RedirectToAction("CreateAdvertisment");
+        }
     }
 }

@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static SkiProject.Infrastructure.Validations.DataConstants.Product;
+using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SelectListItem = Microsoft.AspNetCore.Mvc.Rendering.SelectListItem;
 
 namespace SkiProject.Core.Models
 {
@@ -18,12 +22,17 @@ namespace SkiProject.Core.Models
         public int CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]
         public Category? Category { get; set; }
-
+        public List<SelectListItem>? Categories { get; set; } = null!;
+        public string? SelectedCategory { get; set; }
+        public string? SelectedCategoryText { get; set; }
 
         [Required]
         public int GenderId { get; set; }
         [ForeignKey(nameof(GenderId))]
         public Gender? Gender { get; set; }
+        public List<SelectListItem>? Genders { get; set; } = null!;
+        public string? SelectedGender { get; set; }
+        public string? SelectedGenderText { get; set; }
 
 
         [Required]
@@ -35,5 +44,6 @@ namespace SkiProject.Core.Models
         public string? Description { get; set; }
 
         public IEnumerable<Image>? ProductImages { get; set; }
+        public string CreatedByUserId { get; set; }
     }
 }
