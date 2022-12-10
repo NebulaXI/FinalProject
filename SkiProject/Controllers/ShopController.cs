@@ -6,9 +6,9 @@ using SkiProject.Infrastructure.Data.Models.Shop;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.StaticFiles.Infrastructure;
-using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using SkiProject.Core.Services;
+using System.Drawing;
 
 namespace SkiProject.Controllers
 {
@@ -75,10 +75,10 @@ namespace SkiProject.Controllers
             var sanitizedPrice = sanitizer.Sanitize(DTOModel.Price.ToString());
             var category = await shopService.GetCategoryById(int.Parse(DTOModel.SelectedCategory));
             var gender = await shopService.GetGenderById(int.Parse(DTOModel.SelectedGender));
-            var images = new List<Image>();
+            var images = new List<ProductImage>();
             foreach (var file in Request.Form.Files)
             {
-                Image img = new Image();
+                var img = new ProductImage();
                 img.ImageName = file.FileName;
 
                 MemoryStream ms = new MemoryStream();
@@ -128,6 +128,14 @@ namespace SkiProject.Controllers
         {
             var ad = await shopService.GetAdvertismentById(AdvertismentId);
             var product = await shopService.GetProductById(ad.ProductId);
+            var imagesData = await shopService.GetImageData(ad.ProductId);
+            var images = new List<Image>();
+            var imagesUrl = await GenerateImageUrls()
+            foreach (var item in imagesData)
+            {
+                images.Add(await shopService.byteArrayToImage(item));
+            }
+            
             var model = new ShowAdvertismentViewModel()
             {
                 CategoryId = product.CategoryId,
@@ -136,16 +144,19 @@ namespace SkiProject.Controllers
                 Gender = product.Gender,
                 Price = product.Price,
                 Description = product.Description,
-                ProductImages = product.ProductImages,
                 CreatedByUserId = product.CreatedByUserId,
                 Title = ad.Title,
                 User = ad.User,
                 CreatedOn = ad.CreatedOn,
-                LastUpdatedOn = ad.LastUpdatedOn
+                LastUpdatedOn = ad.LastUpdatedOn,
+                ImagesData= imagesData,
+                Images=images,
+                ImagesUrl
             };
 
             return View(model);
         }
+
 
         
     }

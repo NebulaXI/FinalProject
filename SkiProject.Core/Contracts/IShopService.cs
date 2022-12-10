@@ -4,6 +4,7 @@ using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,5 +33,7 @@ namespace SkiProject.Core.Contracts
         Task AddNewAdvetisment(Advertisment advertisment);
         Task<Advertisment> GetAdvertismentById(int id);
         Task<Product> GetProductById(int id);
+        Task<IEnumerable<byte[]>> GetImageData(int productId);
+        Task<Image> byteArrayToImage(byte[] bytesArr);
     }
 }

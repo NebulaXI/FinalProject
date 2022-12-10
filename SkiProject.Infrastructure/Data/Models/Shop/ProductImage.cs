@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SkiProject.Infrastructure.Data.Models.Shop
 {
-    public class Image
+    public class ProductImage
     {
         [Key]
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace SkiProject.Infrastructure.Data.Models.Shop
 
         public byte[] ImageData { get; set; }
 
-        //public int? ProductId { get; set; }
+        public int? ProductId { get; set; }
         //[ForeignKey(nameof(ProductId))]
         //public Product? Product { get; set; }
 

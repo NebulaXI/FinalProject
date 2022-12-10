@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
@@ -7,6 +8,8 @@ using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,7 +69,7 @@ namespace SkiProject.Core.Services
         }
         public async Task<List<Advertisment>> AdsFilteredByCategory(string nameOfCategory)
         {
-           var filteredProducts = await ProductsFilteredByCategory(nameOfCategory);
+            var filteredProducts = await ProductsFilteredByCategory(nameOfCategory);
             var advertisments = await GetAllAdvertisments();
             var filteredAdvertisments = new List<Advertisment>();
             foreach (var prod in filteredProducts)
@@ -85,7 +88,7 @@ namespace SkiProject.Core.Services
 
         public async Task<List<Advertisment>> AdsFilteredByGender(string nameOfGender)
         {
-           var filteredProducts = await ProductsFilteredByGender(nameOfGender);
+            var filteredProducts = await ProductsFilteredByGender(nameOfGender);
             var advertisments = await GetAllAdvertisments();
             var filteredAdvertisments = new List<Advertisment>();
             foreach (var prod in filteredProducts)
@@ -156,12 +159,12 @@ namespace SkiProject.Core.Services
                 Price = model.Price,
                 Description = model.Description,
                 ProductImages = model.ProductImages,
-                CreatedByUserId=model.CreatedByUserId,
-                User=model.User
+                CreatedByUserId = model.CreatedByUserId,
+                User = model.User
             };
             return product;
         }
-        public async Task<Advertisment> CreateAdvertisment (NewProductViewModel model,Product product)
+        public async Task<Advertisment> CreateAdvertisment(NewProductViewModel model, Product product)
         {
 
             var advertisment = new Advertisment()
@@ -173,7 +176,7 @@ namespace SkiProject.Core.Services
                 CreatedOn = model.CreatedOn,
                 LastUpdatedOn = model.LastUpdatedOn,
                 Image = product.ProductImages.Select(i => i.ImageData).FirstOrDefault(),
-                Title=model.Title
+                Title = model.Title
             };
             return advertisment;
         }
@@ -181,7 +184,7 @@ namespace SkiProject.Core.Services
         {
             await repo.AddAsync(product);
             await repo.SaveChangesAsync();
-            
+
         }
         public async Task AddNewAdvetisment(Advertisment advertisment)
         {
@@ -210,7 +213,29 @@ namespace SkiProject.Core.Services
             return product;
         }
 
+        public async Task<IEnumerable<byte[]>> GetImageData(int productId)
+        {
+            var images = repo.All<ProductImage>().Where(p => p.ProductId == productId);
+            var imagesData = new List<byte[]>();
+            foreach (var image in images)
+            {
+                imagesData.Add(image.ImageData);
+            }
+            return imagesData;
+        }
+        public async Task<Image> byteArrayToImage(byte[] bytesArr)
+        {
+            using (MemoryStream memstr = new MemoryStream(bytesArr))
+            {
+                Image img = Image.FromStream(memstr);
+                return img;
+            }
 
-        
+        }
+
+        public async Task<List<string>> GenerateImageUrls()
+        {
+
+        }
     }
 }

@@ -45,7 +45,7 @@ namespace SkiProject.Core.Models
         [MaxLength(DescriptionMaxLength, ErrorMessage = "Description cannot be more than 3500 characters.")]
         public string? Description { get; set; }
 
-        public IEnumerable<Image>? ProductImages { get; set; }
+        public IEnumerable<ProductImage>? ProductImages { get; set; }
         public string? CreatedByUserId { get; set; }
 
 

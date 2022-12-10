@@ -109,7 +109,7 @@ namespace SkiProject.Infrastructure.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<ForumTopic> Topics { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<ProductImage> Images { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Advertisment> Advertisments { get; set; }
