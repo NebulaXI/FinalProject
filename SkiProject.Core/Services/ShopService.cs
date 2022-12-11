@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using SkiProject.Core.Contracts;
@@ -8,7 +9,9 @@ using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -225,17 +228,40 @@ namespace SkiProject.Core.Services
         }
         public async Task<Image> byteArrayToImage(byte[] bytesArr)
         {
+            string folderPath = ("~/Images/"); 
+            string fileName = "Image.jpg";
+            string imagePath = folderPath + fileName;
             using (MemoryStream memstr = new MemoryStream(bytesArr))
             {
                 Image img = Image.FromStream(memstr);
+                //img.Save(imagePath, ImageFormat.Jpeg);
                 return img;
             }
 
         }
-
-        public async Task<List<string>> GenerateImageUrls()
+        public async Task<List<string>> GenerateImageUrls(List<Image> images)
         {
-
+            var urls = new List<string>();
+            int n = 1;
+            foreach (var img in images)
+            {
+                if (Directory.GetFiles(@"Images/Ads").Length == 0)
+                {
+                    img.Save($"/Images/Ads/image{n}", ImageFormat.Jpeg);
+                    n++;
+                    urls.Add($"/Images/Ads/image{n}");
+                }
+                //else
+                //{
+                //    var files = Directory.GetFiles(@"Images/Ads");
+                //    foreach (var file in files)
+                //    {
+                //        file.Replace()
+                //    }
+                //}
+                
+            }
+            return urls;
         }
     }
 }

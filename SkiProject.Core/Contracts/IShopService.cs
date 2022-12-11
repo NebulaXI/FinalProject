@@ -35,5 +35,6 @@ namespace SkiProject.Core.Contracts
         Task<Product> GetProductById(int id);
         Task<IEnumerable<byte[]>> GetImageData(int productId);
         Task<Image> byteArrayToImage(byte[] bytesArr);
+        Task<List<string>> GenerateImageUrls(List<Image> images);
     }
 }

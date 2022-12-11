@@ -75,21 +75,25 @@ namespace SkiProject.Controllers
             var sanitizedPrice = sanitizer.Sanitize(DTOModel.Price.ToString());
             var category = await shopService.GetCategoryById(int.Parse(DTOModel.SelectedCategory));
             var gender = await shopService.GetGenderById(int.Parse(DTOModel.SelectedGender));
-            var images = new List<ProductImage>();
-            foreach (var file in Request.Form.Files)
+            var productImages = new List<ProductImage>();
+            if (Request.Form.Files.Count<5)
             {
-                var img = new ProductImage();
-                img.ImageName = file.FileName;
+                foreach (var file in Request.Form.Files)
+                {
+                    var img = new ProductImage();
+                    img.ImageName = file.FileName;
 
-                MemoryStream ms = new MemoryStream();
-                file.CopyTo(ms);
-                img.ImageData = ms.ToArray();
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    img.ImageData = ms.ToArray();
 
-                ms.Close();
-                ms.Dispose();
+                    ms.Close();
+                    ms.Dispose();
 
-                images.Add(img);
+                    productImages.Add(img);
+                }
             }
+            
             var model = new NewProductViewModel()
             {
                 CategoryId =int.Parse(DTOModel.SelectedCategory),
@@ -104,7 +108,7 @@ namespace SkiProject.Controllers
                 SelectedGenderText= gender.NameOfGender,
                 Price =Decimal.Parse(sanitizedPrice),
                 Description =sanitizer.Sanitize(DTOModel.Description),
-                ProductImages =images,
+                ProductImages =productImages,
                 CreatedByUserId=userId,
                 Title=sanitizer.Sanitize(DTOModel.Title),
                 User=await shopService.GetCurrentUser(userId),
@@ -130,11 +134,11 @@ namespace SkiProject.Controllers
             var product = await shopService.GetProductById(ad.ProductId);
             var imagesData = await shopService.GetImageData(ad.ProductId);
             var images = new List<Image>();
-            var imagesUrl = await GenerateImageUrls()
             foreach (var item in imagesData)
             {
                 images.Add(await shopService.byteArrayToImage(item));
             }
+           // var urls = await shopService.GenerateImageUrls(images);
             
             var model = new ShowAdvertismentViewModel()
             {
@@ -150,8 +154,7 @@ namespace SkiProject.Controllers
                 CreatedOn = ad.CreatedOn,
                 LastUpdatedOn = ad.LastUpdatedOn,
                 ImagesData= imagesData,
-                Images=images,
-                ImagesUrl
+                Images=images
             };
 
             return View(model);

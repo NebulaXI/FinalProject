@@ -18,6 +18,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IResortService, ResortService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IShopService, ShopService>();
+            services.AddScoped<IMessageService, MessageService>();
+
 
             return services;
         }

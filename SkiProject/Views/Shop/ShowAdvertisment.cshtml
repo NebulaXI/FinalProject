@@ -4,7 +4,7 @@
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="card" style="border-radius: 1rem;">
             <h1 style="text-align:center">@Model.Title</h1>
-            @*<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+           @* <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselIndicators" data-slide-to="1"></li>
@@ -38,11 +38,11 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>*@
-            @foreach(var item in Model.Images)
+            @*@foreach(var item in Model.Images)
             {
                 <img id="uploadPreview" style="width: 100px; height: 100px;" />
                 <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();" />
-            }
+            }*@
             
             <h2>Price:@Model.Price BGN</h2>
             <h4 style="text-align:left">@Model.Description</h4>
