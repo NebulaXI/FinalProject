@@ -31,7 +31,7 @@ namespace SkiProject.Core.Services
             return user;
         }
 
-        public async Task AddMessageInDB(SendMessageModel model)
+        public async Task<Message> AddMessageInDB(SendMessageModel model)
         {
             var message = new Message()
             {
@@ -39,9 +39,43 @@ namespace SkiProject.Core.Services
                 SenderId = model.SenderId,
                 Receiver = model.Receiver,
                 ReceiverId = model.ReceiverId,
-                Content = model.Content
+                Content = model.Content,
+                CreatedOn = DateTime.Now
             };
             await repo.AddAsync<Message>(message);
+            await repo.SaveChangesAsync();
+            return message;
+        }
+        public async Task AddMessageToReceived(ApplicationUser receiver,Message message)
+        {
+            if (receiver.ReceivedMessages == null)
+            {
+                var receivedMes = new List<Message>();
+                receivedMes.Add(message);
+            }
+            else
+            {
+                var receivedMes = receiver.ReceivedMessages;
+                receivedMes.Add(message);
+            }
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task AddMessageToSent (ApplicationUser sender,Message message)
+        {
+           
+            if (sender.SentMessages==null)
+            {
+                var sentMes = new List<Message>();
+                sentMes.Add(message);
+            }
+            else
+            {
+                var sentMes = sender.SentMessages;
+                sentMes.Add(message);
+            }
+            
             await repo.SaveChangesAsync();
         }
     }

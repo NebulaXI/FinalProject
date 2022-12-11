@@ -49,8 +49,8 @@ namespace SkiProject.Infrastructure.Data.Models.Account
         public IEnumerable<ForumTopic>? CreatedTopics { get; set; }
         public List<Product>? CreatedProducts { get; set; }
         public List<Advertisment>? CreatedAdvertisments { get; set; }
-        public IEnumerable<Message>? SentMessages { get; set; }
-        public IEnumerable<Message>? ReceivedMessages { get; set; }
+        public List<Message>? SentMessages { get; set; }
+        public List<Message>? ReceivedMessages { get; set; }
 
     }
 }

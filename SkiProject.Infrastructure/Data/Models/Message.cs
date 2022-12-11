@@ -29,5 +29,7 @@ namespace SkiProject.Infrastructure.Data.Models
         [Required]
         [MaxLength(MessageMaxLength, ErrorMessage = "Single message cannot be more than 3500 characters.")]
         public string Content { get; set; } = null!;
+
+        public DateTime? CreatedOn { get; set; }
     }
 }

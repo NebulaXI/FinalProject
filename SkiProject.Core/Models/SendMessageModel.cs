@@ -12,14 +12,11 @@ namespace SkiProject.Core.Models
 {
     public class SendMessageModel
     {
-        [Required]
         public string? SenderId { get; set; }
-        [ForeignKey(nameof(SenderId))]
         public ApplicationUser? Sender { get; set; }
 
-        [Required]
+        
         public string? ReceiverId { get; set; }
-        [ForeignKey(nameof(ReceiverId))]
         public ApplicationUser? Receiver { get; set; }
         public string? ReceiverName { get; set; }
 
