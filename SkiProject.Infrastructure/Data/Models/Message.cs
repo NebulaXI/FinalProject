@@ -17,8 +17,8 @@ namespace SkiProject.Infrastructure.Data.Models
 
         [Required]
         public string? SenderId { get; set; }
-        [ForeignKey(nameof(SenderId))]
-        public ApplicationUser? Sender { get; set; }
+        //[ForeignKey(nameof(SenderId))]
+        //public ApplicationUser? Sender { get; set; }
 
         [Required]
         public string? ReceiverId { get; set; }

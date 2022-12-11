@@ -14,7 +14,7 @@ namespace SkiProject.Core.Contracts
         Task<ApplicationUser> FindUserByName(string userName);
         Task<ApplicationUser> FindUserById(string id);
         Task<Message> AddMessageInDB(SendMessageModel model);
-        Task AddMessageToReceived(ApplicationUser receiver, Message message);
-        Task AddMessageToSent(ApplicationUser sender, Message message);
+        Task AddMessageToUser(ApplicationUser user, Message message);
+        Task<List<Message>> GetAllMessages(ApplicationUser user);
     }
 }

@@ -133,6 +133,10 @@ namespace SkiProject.Controllers
             var ad = await shopService.GetAdvertismentById(AdvertismentId);
             var product = await shopService.GetProductById(ad.ProductId);
             var imagesData = await shopService.GetImageData(ad.ProductId);
+            var ownerId = ad.UserId;
+            var owner = await shopService.GetCurrentUser(ownerId);
+            var ownerUserName = owner.UserName;
+            HttpContext.Response.Cookies.Append("visited_ad_owner", ownerUserName);
             var images = new List<Image>();
             foreach (var item in imagesData)
             {
@@ -148,9 +152,9 @@ namespace SkiProject.Controllers
                 Gender = product.Gender,
                 Price = product.Price,
                 Description = product.Description,
-                CreatedByUserId = product.CreatedByUserId,
+                CreatedByUserId = ownerId,
                 Title = ad.Title,
-                User = ad.User,
+                User = owner,
                 CreatedOn = ad.CreatedOn,
                 LastUpdatedOn = ad.LastUpdatedOn,
                 ImagesData= imagesData,

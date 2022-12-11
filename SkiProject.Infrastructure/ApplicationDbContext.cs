@@ -75,13 +75,11 @@ namespace SkiProject.Infrastructure.Data
             //    .WithOne(s => s.Product)
             //    .HasForeignKey(f => f.ProductId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(g => g.SentMessages)
+                .HasMany(g => g.Messages)
                 .WithOne(s => s.Receiver)
                 .HasForeignKey(f => f.ReceiverId).OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(g => g.ReceivedMessages)
-                .WithOne(s => s.Sender)
-                .HasForeignKey(f => f.SenderId).OnDelete(DeleteBehavior.Restrict);
+            
+
 
             modelBuilder.Entity<ForumTopic>().HasIndex(u => u.Title).IsUnique();
             modelBuilder.Entity<Advertisment>().HasIndex(u => u.Title).IsUnique();

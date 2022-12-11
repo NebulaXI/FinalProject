@@ -18,43 +18,45 @@ namespace SkiProject.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> GetAllPostsBetweenUsers()
-        {
-            var senderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var sender = await mesService.FindUserById(senderId);
+        //public async Task<IActionResult> GetAllPostsBetweenUsers()
+        //{
+        //    var senderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var sender = await mesService.FindUserById(senderId);
 
-            var receiver = await mesService.FindUserById(messageToPass.ReceiverId);
-            List<Message> allMessages = new List<Message>();
-            if (sender.SentMessages!=null)
-            {
-                List<Message> sentMessages = sender.SentMessages.Where(r => r.ReceiverId == receiver.Id).ToList();
-                foreach (var item in sentMessages)
-                {
-                    allMessages.Add(item);
-                }
-            }
-            if (sender.ReceivedMessages!=null)
-            {
-                List<Message> receivedMessages = sender.ReceivedMessages.Where(r => r.SenderId == receiver.Id).ToList();
+        //    var receiver = await mesService.FindUserById(messageToPass.ReceiverId);
+        //    List<Message> allMessages = new List<Message>();
+        //    if (sender.SentMessages!=null)
+        //    {
+        //        List<Message> sentMessages = sender.SentMessages.Where(r => r.ReceiverId == receiver.Id).ToList();
+        //        foreach (var item in sentMessages)
+        //        {
+        //            allMessages.Add(item);
+        //        }
+        //    }
+        //    if (sender.ReceivedMessages!=null)
+        //    {
+        //        List<Message> receivedMessages = sender.ReceivedMessages.Where(r => r.SenderId == receiver.Id).ToList();
 
-                foreach (var item in receivedMessages)
-                {
-                    allMessages.Add(item);
-                }
-            }
+        //        foreach (var item in receivedMessages)
+        //        {
+        //            allMessages.Add(item);
+        //        }
+        //    }
             
             
-            allMessages.OrderByDescending(c=>c.CreatedOn);
-            var model = new ShowMessageViewModel()
-            {
-                Receiver = receiver,
-                ReceiverId = receiver.Id,
-                Sender = sender,
-                SenderId = senderId,
-                Messages = allMessages
-            };
-            return View(model);
-        }
+        //    allMessages.OrderByDescending(c=>c.CreatedOn);
+        //    var model = new ShowMessageViewModel()
+        //    {
+        //        Receiver = receiver,
+        //        ReceiverId = receiver.Id,
+        //        Sender = sender,
+        //        SenderId = senderId,
+        //        Messages = allMessages
+        //    };
+        //    return View(model);
+        //}
+
+        
 
         [HttpGet]
         public async Task<IActionResult> SendMessage()
@@ -65,15 +67,17 @@ namespace SkiProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(SendMessageModel DTOmodel)
         {
-            var user = await mesService.FindUserByName(DTOmodel.ReceiverName);
+            
             var senderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var sender = await mesService.FindUserById(senderId);
+            var ownerUserName = HttpContext.Request.Cookies["visited_ad_owner"];
+            var receiver = await mesService.FindUserByName(ownerUserName);
             var model = new SendMessageModel()
             {
                 Content = DTOmodel.Content,
                 ReceiverName = DTOmodel.ReceiverName,
-                Receiver = user,
-                ReceiverId = user.Id,
+                Receiver = receiver,
+                ReceiverId = receiver.Id,
                 SenderId = senderId,
                 Sender = sender
             };
@@ -83,9 +87,18 @@ namespace SkiProject.Controllers
                 return View(model);
             }
             var message = await mesService.AddMessageInDB(model);
-            await mesService.AddMessageToReceived(user, message);
-            await mesService.AddMessageToSent(sender, message);
+            await mesService.AddMessageToUser(receiver, message);
+            await mesService.AddMessageToUser(sender, message);
             return View();
+        }
+
+        public async Task<IActionResult> ShowMessages()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await mesService.FindUserById(userId);
+            var messages = await mesService.GetAllMessages(user);
+            var model = new ShowMessageViewModel() { SenderId = userId,Messages=messages };
+            return View(model);
         }
     }
 }
