@@ -1,0 +1,10 @@
+﻿#example1 {
+    background-color: #EEEEEE;
+    box-sizing: border-box;
+    width: 1350px;
+    height: 800px;
+    padding: 30px;
+    border: 1px solid #000000;
+    margin: 10px;
+    overflow: auto;
+}

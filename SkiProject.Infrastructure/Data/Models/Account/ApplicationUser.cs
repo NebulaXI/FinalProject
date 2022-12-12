@@ -49,7 +49,7 @@ namespace SkiProject.Infrastructure.Data.Models.Account
         public IEnumerable<ForumTopic>? CreatedTopics { get; set; }
         public List<Product>? CreatedProducts { get; set; }
         public List<Advertisment>? CreatedAdvertisments { get; set; }
-        public List<Message>? Messages { get; set; }
+        public virtual List<Message>? Messages { get; set; }
 
     }
 }

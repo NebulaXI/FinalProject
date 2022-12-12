@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Ganss.Xss;
+using SkiProject.Infrastructure.Data.Models;
+using SkiProject.Infrastructure.Data.Models.Shop;
 
 namespace SkiProject.Controllers
 {
@@ -50,7 +52,12 @@ namespace SkiProject.Controllers
                 FirstName =sanitizer.Sanitize (model.FirstName),
                 LastName =sanitizer.Sanitize( model.LastName),
                 EmailConfirmed = true,
-                Birthday =model.Birthdate
+                Birthday = model.Birthdate,
+                Posts = new List<Post>(),
+                CreatedTopics = new List<ForumTopic>(),
+                CreatedProducts = new List<Product>(),
+                CreatedAdvertisments = new List<Advertisment>(),
+                Messages = new List<Message>()
             };
             //When creating user with password
             //If we are creating an user without a password=>(user)

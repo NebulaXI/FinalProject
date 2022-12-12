@@ -1,0 +1,22 @@
+﻿@model ShowMessageViewModel
+@*<div class="container" style='overflow-y:auto'>
+@foreach(var mes in Model.Chats){
+  <div>
+    <p>AnotherUser:@mes.User2</p>
+    
+    <p>Content:@foreach (var item in mes.MessagesBetweenUsers)
+        {
+            <p>@item.Content</p>
+            <p>@item.CreatedOn</p>
+        }</p>
+  </div>
+}
+</div>*@
+
+<div class="list-group">
+    @foreach(var mes in Model.Chats)
+    {
+        
+       <a href='@Url.Action("ShowMessages", "Message",new {user2Id=mes.user2Id})' class="list-group-item list-group-item-action">@mes.User2.UserName</a>
+    }
+</div>

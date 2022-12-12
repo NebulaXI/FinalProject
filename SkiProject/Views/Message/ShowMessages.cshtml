@@ -1,7 +1,49 @@
-﻿@model ShowMessageViewModel
+﻿@model ChatViewModel
+@*<link rel="stylesheet" href="~/css/scroll.css">*@
+<style>
+    #example1{
+        background-color: #EEEEEE;
+        box-sizing: border-box;
+        width: 1350px;
+        height: 400px;
+        padding: 30px;
+        border: 1px solid #000000;
+        margin: 10px;
+        overflow: auto;
+    }
+</style>
+<div class="container" >
+    <ul class="list-group" id="example1">
+        @foreach (var item in Model.MessagesBetweenUsers)
+        {
+            <li class="list-group-item">
+                @if (item.SenderId == TempData["user1"].ToString())
+                {
+                    <p style="text-align:right">@TempData["createdByuser1"]:</p>
+                    <p style="text-align:right">@item.Content</p>
+                    <p style="text-align:right">@item.CreatedOn</p>
+                }
+                else
+                {
+                    <p style="text-align:left">@TempData["createdByuser2"]:</p>
+                    <p style="text-align:left">@item.Content</p>
+                    <p style="text-align:left">@item.CreatedOn</p>
+                }
+            
+            </li>
+        }
+    </ul>
+    <form asp-controller="Message" asp-action="AddNewMessage" method="post">
+        <
+        <div class="form-group">
+            <label asp-for="NewMessageContent">Content</label>
+            <textarea asp-for="NewMessageContent" class="form-control" aria-label="With textarea"></textarea>
+            <span asp-validation-for="NewMessageContent" class="small text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Create a new topic</button>
+    </form>
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+</div>
 
-@foreach(var mes in Model.Messages){
-    <p>Sender:@mes.SenderId</p>
-    <p>Receiver:@mes.ReceiverId</p>
-    <p>Content:@mes.Content</p>
-}

@@ -4,6 +4,7 @@ using SkiProject.Core.Models;
 using SkiProject.Infrastructure.Data.Models;
 using SkiProject.Infrastructure.Data.Models.Account;
 using System.Security.Claims;
+using System.Xml.Linq;
 
 namespace SkiProject.Controllers
 {
@@ -86,19 +87,74 @@ namespace SkiProject.Controllers
             {
                 return View(model);
             }
+            
             var message = await mesService.AddMessageInDB(model);
-            await mesService.AddMessageToUser(receiver, message);
-            await mesService.AddMessageToUser(sender, message);
             return View();
         }
 
-        public async Task<IActionResult> ShowMessages()
+        public async Task<IActionResult> ShowChats()
         {
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await mesService.FindUserById(userId);
-            var messages = await mesService.GetAllMessages(user);
-            var model = new ShowMessageViewModel() { SenderId = userId,Messages=messages };
+            var chats = await mesService.GetAllChats(user);
+            if (chats.Count==0)
+            {
+                return View("NoMessagesView");
+            }
+            var model = new ShowMessageViewModel() { Chats = chats };
             return View(model);
         }
+
+        public async Task<IActionResult> ShowMessages(string user2Id)
+        {
+
+            HttpContext.Response.Cookies.Append("user2_id", user2Id);
+            var user1Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user1 = await mesService.FindUserById(user1Id);
+            var user2 = await mesService.FindUserById(user2Id);
+            var mes= await mesService.GetMessagesBetweenUsers(user2.Id, user1.Id);
+            mes.OrderBy(c => c.CreatedOn);
+            TempData["user1"] = user1Id;
+            TempData["createdByUser1"] = user1.UserName;
+            TempData["createdByUser2"] = user2.UserName;
+            var model = new ChatViewModel()
+            {
+                User1 = user1,
+                User2 = user2,
+                user2Id = user2Id,
+                user1Id = user1Id,
+                MessagesBetweenUsers = mes
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddNewMessage()
+        {
+            var model = new ChatViewModel();
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddNewMessage(ChatViewModel model)
+        {
+
+            var user1Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user1 = await mesService.FindUserById(user1Id);
+            var user2Id =HttpContext.Request.Cookies["user2_id"];
+            var user2 = await mesService.FindUserById(user2Id);
+            var Sendmodel = new SendMessageModel()
+            {
+                Content = model.NewMessageContent,
+                ReceiverName = user2.UserName,
+                Receiver = user2,
+                ReceiverId = user2.Id,
+                SenderId = user1Id,
+                Sender = user1
+            };
+            var message = await mesService.AddMessageInDB(Sendmodel);
+            return RedirectToAction("ShowMessages",new {user2Id=user2Id});
+        }
+
     }
 }

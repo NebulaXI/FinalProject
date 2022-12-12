@@ -3,6 +3,7 @@ using SkiProject.Core.Models;
 using SkiProject.Infrastructure.Data.Common;
 using SkiProject.Infrastructure.Data.Models;
 using SkiProject.Infrastructure.Data.Models.Account;
+using SkiProject.Infrastructure.Data.Models.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,33 +43,24 @@ namespace SkiProject.Core.Services
                 Content = model.Content,
                 CreatedOn = DateTime.Now
             };
-            await repo.AddAsync(message);
-            //await AddMessageToUser(model.Receiver, message);
-            //await AddMessageToUser(model.Sender,message);
+            await repo.AddAsync<Message>(message);
             await repo.SaveChangesAsync();
             return message;
         }
-        public async Task AddMessageToUser(ApplicationUser user,Message message)
-        {
-            if (user.Messages == null)
-            {
-                var receivedMes = new List<Message>();
-                receivedMes.Add(message);
-            }
-            else
-            {
-                var receivedMes = user.Messages;
-                receivedMes.Add(message);
-            }
+        
 
-            await repo.SaveChangesAsync();
+
+
+        public async Task<List<ChatViewModel>> GetAllChats(ApplicationUser user)
+        {
+
+            var messages = await GetMessagesOfUser(user);
+            var chats = await GroupMessagesToChats(messages, user);
+            return chats;
         }
 
-
-
-        public async Task<List<Message>> GetAllMessages(ApplicationUser user)
+        public async Task<List<Message>> GetMessagesOfUser(ApplicationUser user)
         {
-
             var send = repo.All<Message>().Where(s => s.SenderId == user.Id).ToList();
             var receive = repo.All<Message>().Where(r => r.ReceiverId == user.Id).ToList();
             var messages = new List<Message>();
@@ -80,18 +72,67 @@ namespace SkiProject.Core.Services
             {
                 messages.Add(item);
             }
-            messages.OrderByDescending(c => c.CreatedOn);
-           // await CreateChat(messages, user.Id);
             return messages;
         }
+        public async Task<List<ChatViewModel>> GroupMessagesToChats(List<Message> messages,ApplicationUser user)
+        {
+            Dictionary<string, string> chat = new Dictionary<string, string>();
 
-        //public async Task CreateChat(List<Message> messages,string userId)
-        //{
-        //    var chat = new List<Message>();
-        //    foreach (var item in messages)
-        //    {
-                
-        //    }
-        //}
+            foreach (var item in messages)
+            {
+                bool IsChatExist = false;
+                if (item.SenderId == user.Id)
+                {
+                    var receiverId = item.ReceiverId;
+                    if (chat.ContainsKey(item.ReceiverId) && chat[item.ReceiverId].Equals(user.Id))
+                    {
+                        IsChatExist = true;
+                    }
+                    else
+                    {
+                        chat.Add(receiverId, user.Id);
+                    }
+                }
+
+                if (item.ReceiverId == user.Id)
+                {
+                    var senderId = item.SenderId;
+                    if (chat.ContainsKey(senderId) && chat[senderId].Equals(user.Id))
+                    {
+                        IsChatExist = true;
+                    }
+                    else
+                    {
+                        chat.Add(senderId, user.Id);
+                    }
+                }
+            }
+            var chats = new List<ChatViewModel>();
+            foreach (var item in chat)
+            {
+                var user1 = await FindUserById(item.Value);
+                var user2 = await FindUserById(item.Key);
+                var chatModel = new ChatViewModel()
+                {
+                    User1 = user1,
+                    User2 = user2,
+                    user1Id = user1.Id,
+                    user2Id = user2.Id,
+                    MessagesBetweenUsers = messages.Where(s => s.SenderId == item.Key && s.ReceiverId == item.Value
+                    || s.SenderId == item.Value && s.ReceiverId == item.Key).OrderByDescending(c => c.CreatedOn).ToList()
+                };
+                chats.Add(chatModel);
+
+            }
+            return chats;
+        }
+
+        public async Task<List<Message>> GetMessagesBetweenUsers (string user2Id,string user1Id)
+        {
+            var mes = repo.All<Message>().Where(s => s.SenderId == user2Id && s.ReceiverId == user1Id
+                    || s.SenderId == user1Id && s.ReceiverId == user2Id).OrderByDescending(c => c.CreatedOn).ToList();
+            return mes;
+        }
+       
     }
 }

@@ -12,7 +12,7 @@ namespace SkiProject.Core.Models
     {   public string? ReceiverId { get; set; } 
         public string? SenderId { get; set; }
         public List<Message>? Messages { get; set; }
-        
+        public List<ChatViewModel>? Chats { get; set; }
         public string? Content { get; set; }
     }
 }

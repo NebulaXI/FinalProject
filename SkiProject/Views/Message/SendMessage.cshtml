@@ -1,14 +1,5 @@
 ﻿@model SendMessageModel
-@*<div id="divPartialView">
-    <!-- something like this in your ASP.NET View -->
-    @await Html.PartialAsync("~/Views/Message/_ShowMessagePartial.cshtml")
-</div>*@
-@*<form asp-controller="Message" asp-action="SendMessage" method="post">
-    <div class="form-group">
-        <label asp-for="ReceiverName">Receiver</label>
-        <input asp-for="ReceiverName" class="form-control" />
-        <span asp-validation-for="ReceiverName" class="small text-danger"></span>
-    </div>*@
+
 <form asp-controller="Message" asp-action="SendMessage" method="post">
     <div class="form-group">
         <label asp-for="Content">Content</label>
