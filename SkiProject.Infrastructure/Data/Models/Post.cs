@@ -20,6 +20,7 @@ namespace SkiProject.Infrastructure.Data.Models
 
         [ForeignKey(nameof(UserId))]
         public ApplicationUser? User { get; set; }
+        public string? Username { get; set; }
 
 
         [Required]

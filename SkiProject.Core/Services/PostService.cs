@@ -88,7 +88,8 @@ namespace SkiProject.Core.Services
                 Date = model.Date,
                 Topic = model.Topic,
                 TopicId = model.TopicId ?? default(int),
-                Content = model.Content
+                Content = model.Content,
+                Username=model.Username
             };
             return p1;
         }

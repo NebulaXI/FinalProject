@@ -19,7 +19,6 @@ namespace SkiProject.Infrastructure.Data.Models
         [MaxLength(TitleMaxLength, ErrorMessage = "The title of the topic cannot be more than 100 characters.")]
         public string Title { get; set; } = null!;
         public List<Post>? Posts { get; set; }
-        [Required]
         public string? CreatedByUserId { get; set; }
         [ForeignKey(nameof(CreatedByUserId))]
         public ApplicationUser? CreatedByUser { get; set; }

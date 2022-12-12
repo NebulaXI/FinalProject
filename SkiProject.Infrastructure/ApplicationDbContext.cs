@@ -78,7 +78,10 @@ namespace SkiProject.Infrastructure.Data
                 .HasMany(g => g.Messages)
                 .WithOne(s => s.Receiver)
                 .HasForeignKey(f => f.ReceiverId).OnDelete(DeleteBehavior.Restrict);
-            
+            modelBuilder.Entity<ForumTopic>()
+                .HasOne(u => u.CreatedByUser)
+                .WithMany(t => t.CreatedTopics)
+                .HasForeignKey(u => u.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<ForumTopic>().HasIndex(u => u.Title).IsUnique();

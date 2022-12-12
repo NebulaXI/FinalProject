@@ -20,6 +20,7 @@ namespace SkiProject.Core.Models
 
         [ForeignKey(nameof(UserId))]
         public ApplicationUser? User { get; set; }
+        public string Username { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -32,7 +33,7 @@ namespace SkiProject.Core.Models
         public string? Content { get; set; } = null!;
 
         public IEnumerable<Post>? Posts { get; set; } 
-        public string? CurrentTopic { get; set; } 
+        public string? CurrentTopic { get; set; }
     }
 }
 

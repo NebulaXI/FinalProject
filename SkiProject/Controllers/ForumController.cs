@@ -60,7 +60,12 @@ namespace SkiProject.Controllers
             {
                 HttpContext.Response.Cookies.Append("visited_topic", title);
             }
-
+            foreach (var item in posts)
+            {
+                var userId = item.UserId;
+                var user = await postService.GetCurrentUser(userId);
+                item.Username = user.UserName;
+            }
             PostViewModel model = new PostViewModel() { Posts=posts,CurrentTopic=title};
             return View(model);
         }
