@@ -51,12 +51,12 @@ namespace SkiProject.Infrastructure.Data
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(g => g.Posts)
                 .WithOne(s => s.User)
-                .HasForeignKey(f => f.UserId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(f => f.UserId).OnDelete(DeleteBehavior.Cascade);
             
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(g => g.CreatedTopics)
                 .WithOne(s => s.CreatedByUser)
-                .HasForeignKey(f => f.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(f => f.CreatedByUserId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(g => g.CreatedAdvertisments)
@@ -69,7 +69,7 @@ namespace SkiProject.Infrastructure.Data
             modelBuilder.Entity<Product>()
                 .HasOne(u => u.User)
                 .WithMany(a => a.CreatedProducts)
-                .HasForeignKey(k => k.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(k => k.CreatedByUserId).OnDelete(DeleteBehavior.Cascade);
             //modelBuilder.Entity<Product>()
             //    .HasMany(g => g.ProductImages)
             //    .WithOne(s => s.Product)

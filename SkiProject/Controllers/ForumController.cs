@@ -21,6 +21,10 @@ namespace SkiProject.Controllers
         public async Task<IActionResult> Index()
         {
            var topics= await postService.GetAllTopics();
+            if (topics.Count==0)
+            {
+                return View("NoTopics");
+            }
            TopicViewModel model = new TopicViewModel() { Topics=topics};
            return View(model);
         }

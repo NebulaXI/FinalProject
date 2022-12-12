@@ -16,11 +16,12 @@ namespace SkiProject.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await mesService.FindUserById(userId);
+            var userBir = user.Birthday;
             var model = new ProfileViewModel()
             {
                 UserName = user.UserName,
-                Birthday = user.Birthday.Value.Date,
-                CreatedOn= user.ProfileCreatedOn.Value.Date
+                Birthday = userBir.Date
+                //CreatedOn= user.ProfileCreatedOn.Value.Date
             };
             return View(model);
         }

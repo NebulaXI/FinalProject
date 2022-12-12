@@ -57,7 +57,8 @@ namespace SkiProject.Controllers
                 CreatedTopics = new List<ForumTopic>(),
                 CreatedProducts = new List<Product>(),
                 CreatedAdvertisments = new List<Advertisment>(),
-                Messages = new List<Message>()
+                Messages = new List<Message>(),
+                ProfileCreatedOn=DateTime.Now
             };
             //When creating user with password
             //If we are creating an user without a password=>(user)

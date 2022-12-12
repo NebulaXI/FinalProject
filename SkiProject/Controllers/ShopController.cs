@@ -28,6 +28,10 @@ namespace SkiProject.Controllers
             var products = await shopService.GetAllProducts();
             var categories = await shopService.GetAllCategories();
             var genders = await shopService.GetAllGenders();
+            if (advretisments.Count==0)
+            {
+                return View("NoAds");
+            }
             model.Advertisments = advretisments; model.Products = products; model.Categories = categories; model.Genders = genders;
 
             return View(model);

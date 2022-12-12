@@ -33,7 +33,7 @@ namespace SkiProject.Infrastructure.Data.Models.Account
 
         [Required]
         [Column(TypeName = "datetime")]
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
 
         [Required]
         [MaxLength(UsernameMax,ErrorMessage ="Username cannot be more than 30 characters.")]
