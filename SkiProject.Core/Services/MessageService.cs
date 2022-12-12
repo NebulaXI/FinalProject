@@ -20,6 +20,12 @@ namespace SkiProject.Core.Services
         {
             this.repo = _repo;
         }
+
+        /// <summary>
+        /// Gets the user by username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public async Task<ApplicationUser> FindUserByName(string userName)
         {
             var users = repo.All<ApplicationUser>();
@@ -27,12 +33,22 @@ namespace SkiProject.Core.Services
             return user;
         }
 
+        /// <summary>
+        /// Gets the user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ApplicationUser> FindUserById(string id)
         {
             var user =await repo.GetByIdAsync<ApplicationUser>(id);
             return user;
         }
 
+        /// <summary>
+        /// Adds message to the database
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<Message> AddMessageInDB(SendMessageModel model)
         {
             var message = new Message()
@@ -50,7 +66,11 @@ namespace SkiProject.Core.Services
         
 
 
-
+        /// <summary>
+        /// Returns a collection of all chats of the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<List<ChatViewModel>> GetAllChats(ApplicationUser user)
         {
 
@@ -59,6 +79,11 @@ namespace SkiProject.Core.Services
             return chats;
         }
 
+        /// <summary>
+        /// Gets the messages of the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<List<Message>> GetMessagesOfUser(ApplicationUser user)
         {
             var send = repo.All<Message>().Where(s => s.SenderId == user.Id).ToList();
@@ -74,6 +99,13 @@ namespace SkiProject.Core.Services
             }
             return messages;
         }
+
+        /// <summary>
+        /// Group user messages to chat pairs
+        /// </summary>
+        /// <param name="messages"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<List<ChatViewModel>> GroupMessagesToChats(List<Message> messages,ApplicationUser user)
         {
             Dictionary<string, string> chat = new Dictionary<string, string>();
@@ -127,6 +159,12 @@ namespace SkiProject.Core.Services
             return chats;
         }
 
+        /// <summary>
+        /// Returns all messages between users
+        /// </summary>
+        /// <param name="user2Id"></param>
+        /// <param name="user1Id"></param>
+        /// <returns></returns>
         public async Task<List<Message>> GetMessagesBetweenUsers (string user2Id,string user1Id)
         {
             var mes = repo.All<Message>().Where(s => s.SenderId == user2Id && s.ReceiverId == user1Id

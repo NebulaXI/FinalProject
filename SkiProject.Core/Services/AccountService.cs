@@ -19,14 +19,21 @@ namespace CoreProject.Core.Services
             repo = _repo;
         }
 
-        //Get the current user by Id
+        /// <summary>
+        /// Gets the current user by Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<ApplicationUser> GetCurrentUser(string userId)
         {
             var currentUser = await repo.GetByIdAsync<ApplicationUser>(userId);
             return currentUser;
         }
 
-        //Updates the logged in user data in the database
+        /// <summary>
+        /// Updates the logged in user data in the database
+        /// </summary>
+        /// <returns></returns>
         public async Task UpdateUser ()
         {
             await repo.SaveChangesAsync();

@@ -19,17 +19,35 @@ namespace SkiProject.Core.Services
         {
             repo = _repo;
         }
+
+        /// <summary>
+        /// Gets resort by it's name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public async Task<City> GetCurrentResort(string name)
         {
             var city = await repo.All<City>().FirstOrDefaultAsync(a => a.Name == name);
             return city;
         }
+
+        /// <summary>
+        /// Gets all places to stay in the current resort by cityId
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
         public async Task<List<PlaceToStay>> GetAllPlacesToStayInCurrentResort(int cityId)
         {
             var placesInCity = await repo.All<PlaceToStay>().Where(a => a.CityId == cityId).ToListAsync();
             return placesInCity;
         }
 
+
+        /// <summary>
+        /// Gets all slopes in the current resort by cityId
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
         public async Task<Slope> GetSlope(int cityId)
         {
             var slope = await repo.All<Slope>().FirstOrDefaultAsync(a => a.CityId == cityId);

@@ -27,31 +27,62 @@ namespace SkiProject.Core.Services
             this.repo = _repo;
         }
 
+        /// <summary>
+        /// Gets user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ApplicationUser> GetCurrentUser(string id)
         {
             var user = repo.All<ApplicationUser>().FirstOrDefault(o => o.Id == id);
             return user;
         }
+
+        /// <summary>
+        /// Returns all advertisments
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Advertisment>> GetAllAdvertisments()
         {
             var advertisments = await repo.All<Advertisment>().ToListAsync();
             return advertisments;
         }
+
+        /// <summary>
+        /// Returns all products
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Product>> GetAllProducts()
         {
             var products = await repo.All<Product>().ToListAsync();
             return products;
         }
+
+        /// <summary>
+        /// Returns all categories
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Category>> GetAllCategories()
         {
             var categories = await repo.All<Category>().ToListAsync();
             return categories;
         }
+
+        /// <summary>
+        /// Returns all genders
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Gender>> GetAllGenders()
         {
             var genders = await repo.All<Gender>().ToListAsync();
             return genders;
         }
+
+        /// <summary>
+        /// Returns all products which are filtered by gender
+        /// </summary>
+        /// <param name="nameOfGender"></param>
+        /// <returns></returns>
         public async Task<List<Product>> ProductsFilteredByGender(string nameOfGender)
         {
             var genders = await GetAllGenders();
@@ -61,6 +92,12 @@ namespace SkiProject.Core.Services
             var filteredProducts = products.Where(p => p.GenderId == id).ToList();
             return filteredProducts;
         }
+
+        /// <summary>
+        /// Returns all products which are filtered by category
+        /// </summary>
+        /// <param name="nameOfCategory"></param>
+        /// <returns></returns>
         public async Task<List<Product>> ProductsFilteredByCategory(string nameOfCategory)
         {
             var categories = await GetAllCategories();
@@ -70,6 +107,11 @@ namespace SkiProject.Core.Services
             var filteredProducts = products.Where(p => p.CategoryId == id).ToList();
             return filteredProducts;
         }
+        /// <summary>
+        /// Returns all advertisments which are filtered by category
+        /// </summary>
+        /// <param name="nameOfCategory"></param>
+        /// <returns></returns>
         public async Task<List<Advertisment>> AdsFilteredByCategory(string nameOfCategory)
         {
             var filteredProducts = await ProductsFilteredByCategory(nameOfCategory);
@@ -88,6 +130,12 @@ namespace SkiProject.Core.Services
 
             return filteredAdvertisments;
         }
+
+        /// <summary>
+        /// Returns all advertisments which are filtered by gender
+        /// </summary>
+        /// <param name="nameOfGender"></param>
+        /// <returns></returns>
 
         public async Task<List<Advertisment>> AdsFilteredByGender(string nameOfGender)
         {
@@ -108,6 +156,12 @@ namespace SkiProject.Core.Services
             return filteredAdvertisments;
         }
 
+
+        /// <summary>
+        /// Gets the category by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Category> GetCategoryById(int id)
         {
             var categories = await GetAllCategories();
@@ -115,6 +169,12 @@ namespace SkiProject.Core.Services
             return category;
         }
 
+
+        /// <summary>
+        /// Gets gender by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Gender> GetGenderById(int id)
         {
             var genders = await GetAllGenders();
@@ -151,6 +211,12 @@ namespace SkiProject.Core.Services
             return genders;
         }
 
+
+        /// <summary>
+        /// Creates new product
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<Product> CreateProduct(NewProductViewModel model)
         {
             var product = new Product()
@@ -167,6 +233,13 @@ namespace SkiProject.Core.Services
             };
             return product;
         }
+
+        /// <summary>
+        /// Creates new advertisment
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public async Task<Advertisment> CreateAdvertisment(NewProductViewModel model, Product product)
         {
 
@@ -183,24 +256,48 @@ namespace SkiProject.Core.Services
             };
             return advertisment;
         }
+
+        /// <summary>
+        /// Adds new product to the database
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public async Task AddNewProduct(Product product)
         {
             await repo.AddAsync(product);
             await repo.SaveChangesAsync();
 
         }
+
+        /// <summary>
+        /// Adds new advertisment to the database
+        /// </summary>
+        /// <param name="advertisment"></param>
+        /// <returns></returns>
         public async Task AddNewAdvetisment(Advertisment advertisment)
         {
             await repo.AddAsync(advertisment);
             await repo.SaveChangesAsync();
         }
 
+
+        /// <summary>
+        /// Gets the last added product by user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<Product> GetLastProductByUserId(string userId)
         {
             var products = repo.All<Product>().Where(u => u.CreatedByUserId == userId);
             var lastProduct = products.Last();
             return lastProduct;
         }
+
+        /// <summary>
+        /// Gets advertisment by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public async Task<Advertisment> GetAdvertismentById(int id)
         {
@@ -209,6 +306,12 @@ namespace SkiProject.Core.Services
             return ad;
         }
 
+
+        /// <summary>
+        /// Gets product by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Product> GetProductById(int id)
         {
             var products = await GetAllProducts();
