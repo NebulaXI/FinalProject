@@ -43,6 +43,7 @@ namespace SkiProject.Infrastructure.Data.Models.Account
         [EmailAddress]
         public override string? Email { get; set; }
 
+        public DateTime? ProfileCreatedOn { get; set; }
 
         public IEnumerable<Reservation>? Reservations { get; set; }
         public IEnumerable<Post>? Posts { get; set; }
