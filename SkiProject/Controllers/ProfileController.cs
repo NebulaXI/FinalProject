@@ -40,6 +40,18 @@ namespace SkiProject.Controllers
             };
             return View("Index", model);
         }
+        public async Task<IActionResult> ViewOtherProfileByUsername(string username)
+        {
+            var user = await mesService.FindUserByName(username);
+            var model = new ProfileViewModel()
+            {
+                UserName = user.UserName,
+                Birthday = user.Birthday.Date,
+                CreatedOn = user.ProfileCreatedOn.Value.Date
+
+            };
+            return View("Index", model);
+        }
 
     }
 }

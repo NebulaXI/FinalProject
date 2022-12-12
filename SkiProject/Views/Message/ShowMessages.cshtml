@@ -19,13 +19,19 @@
             <li class="list-group-item">
                 @if (item.SenderId == TempData["user1"].ToString())
                 {
-                    <p style="text-align:right">@TempData["createdByuser1"]:</p>
+                    <p style="text-align:right">
+                        Created by:<a href='@Url.Action("ViewOtherProfileByUserName", "Profile",new{userId=@TempData["createdByuser1"]})'>@TempData["createdByuser1"]:</a>
+                    </p>
+                    @*<p style="text-align:right">@TempData["createdByuser1"]:</p>*@
                     <p style="text-align:right">@item.Content</p>
                     <p style="text-align:right">@item.CreatedOn</p>
                 }
                 else
                 {
-                    <p style="text-align:left">@TempData["createdByuser2"]:</p>
+                    <p style="text-align:left">
+                        Created by:<a href='@Url.Action("ViewOtherProfileByUserName", "Profile",new{username=@TempData["createdByuser2"]})'>@TempData["createdByuser2"]:</a>
+                    </p>
+                    @*<p style="text-align:left">@TempData["createdByuser2"]:</p>*@
                     <p style="text-align:left">@item.Content</p>
                     <p style="text-align:left">@item.CreatedOn</p>
                 }
