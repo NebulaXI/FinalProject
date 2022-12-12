@@ -69,7 +69,7 @@ namespace SkiProject.Infrastructure.Data
             modelBuilder.Entity<Product>()
                 .HasOne(u => u.User)
                 .WithMany(a => a.CreatedProducts)
-                .HasForeignKey(k => k.CreatedByUserId).OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(k => k.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
             //modelBuilder.Entity<Product>()
             //    .HasMany(g => g.ProductImages)
             //    .WithOne(s => s.Product)
