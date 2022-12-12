@@ -14,23 +14,31 @@ namespace SkiProject.Controllers
         }
         public async Task<IActionResult> Index()
         {
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await mesService.FindUserById(userId);
-            var model = new ProfileViewModel();
-            if (user.ProfileCreatedOn!=null)
+            var model = new ProfileViewModel()
             {
-                model.UserName = user.UserName;
-                model.Birthday = user.Birthday.Date;
-                model.CreatedOn = user.ProfileCreatedOn.Value.Date;
-                
-            }
-            else
-            {
-                model.UserName = user.UserName;
-                model.Birthday = user.Birthday.Date;
-            }
+                UserName = user.UserName,
+                Birthday = user.Birthday.Date,
+                CreatedOn = user.ProfileCreatedOn.Value.Date
+
+            };
             
             return View(model);
+        }
+
+        public async Task<IActionResult> ViewOtherProfile(string userId)
+        {
+            var user = await mesService.FindUserById(userId);
+            var model = new ProfileViewModel()
+            {
+                UserName = user.UserName,
+                Birthday = user.Birthday.Date,
+                CreatedOn = user.ProfileCreatedOn.Value.Date
+
+            };
+            return View("Index", model);
         }
 
     }
