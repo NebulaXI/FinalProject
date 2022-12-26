@@ -26,7 +26,7 @@ namespace SkiProject.Infrastructure.Configuration
             {
                 Id= 2,
                 Name = "Borovets",
-                WebCamera= "https://www.borovets-bg.com/en/page/info/lifts-trails/weather-webcams-avalanche-warning"
+                WebCamera= "https://weather-webcam.eu/borovec-hotel-ela-online-kamea-rila-na-jivo/"
             };
             cities.Add(borovets);
             var pamporovo = new City()

@@ -9,7 +9,8 @@
     width: 100%;
     height: 100%;
     font-family: 'indieflower-regular';
-    font-size:16px;
+    font-size: 16px;
+    overflow: auto;
 }
 @font-face {
     font-family: 'indieflower-regular';
@@ -24,5 +25,6 @@
     height: 100%;
     border: 5px solid red;
     box-sizing: border-box;
+    
 }
 

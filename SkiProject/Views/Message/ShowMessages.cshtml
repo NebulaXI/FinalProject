@@ -20,7 +20,7 @@
                 @if (item.SenderId == TempData["user1"].ToString())
                 {
                     <p style="text-align:right">
-                        Created by:<a href='@Url.Action("ViewOtherProfileByUserName", "Profile",new{userId=@TempData["createdByuser1"]})'>@TempData["createdByuser1"]:</a>
+                        <a href='@Url.Action("ViewOtherProfileByUserName", "Profile",new{userId=@TempData["createdByuser1"]})'>@TempData["createdByuser1"]:</a>
                     </p>
                     @*<p style="text-align:right">@TempData["createdByuser1"]:</p>*@
                     <p style="text-align:right">@item.Content</p>
@@ -29,7 +29,7 @@
                 else
                 {
                     <p style="text-align:left">
-                        Created by:<a href='@Url.Action("ViewOtherProfileByUserName", "Profile",new{username=@TempData["createdByuser2"]})'>@TempData["createdByuser2"]:</a>
+                        <a href='@Url.Action("ViewOtherProfileByUserName", "Profile",new{username=@TempData["createdByuser2"]})'>@TempData["createdByuser2"]:</a>
                     </p>
                     @*<p style="text-align:left">@TempData["createdByuser2"]:</p>*@
                     <p style="text-align:left">@item.Content</p>
@@ -40,13 +40,13 @@
         }
     </ul>
     <form asp-controller="Message" asp-action="AddNewMessage" method="post">
-        <
+        
         <div class="form-group">
-            <label asp-for="NewMessageContent">Content</label>
+            <label asp-for="NewMessageContent">Message:</label>
             <textarea asp-for="NewMessageContent" class="form-control" aria-label="With textarea"></textarea>
             <span asp-validation-for="NewMessageContent" class="small text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-success mt-2">Create a new topic</button>
+        <button type="submit" class="btn btn-success mt-2">Send a new message</button>
     </form>
     @section Scripts{
         <partial name="_ValidationScriptsPartial" />

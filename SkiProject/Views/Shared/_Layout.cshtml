@@ -29,6 +29,9 @@
                         @if (this.User?.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Resort" asp-action="Index">Resorts</a>
                             </li>
                             <li class="nav-item">
@@ -37,9 +40,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Index">Shop</a>
                             </li>
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Message" asp-action="ShowChats">Messages</a>
-                            </li>
+                            </li>*@
                         }
                         
                     </ul>

@@ -12,9 +12,13 @@
                         </div>
                         <h4 class="mb-2">@Model.UserName</h4>
                        
-                        <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                        @*<button type="button" class="btn btn-primary btn-rounded btn-lg">
                             Message now
-                        </button>
+                        </button>*@
+                    <button type="submit" class="btn btn-primary btn-rounded btn-lg"
+                            onclick="location.href='@Url.Action("SendMessageProfile", "Profile")'" )>
+                        Send message
+                    </button>
                         <div class="d-flex justify-content-between text-center mt-5 mb-2">
                             <div>
                                 <p class="mb-2 h5">Birthday</p>

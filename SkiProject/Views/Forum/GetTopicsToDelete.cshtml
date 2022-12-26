@@ -27,7 +27,7 @@
         {
            <div class="list-group-item list-group-item-action" href="@Url.Action("GetAllPosts","Forum", new {title=item.Title})">@item.Title (@item.CommentsCount comment)
                 <div class="input-group-append">
-                    <button  type="button" style="float: right;"
+                    <button class="btn btn-outline-secondary" type="button" style="float: right;"
                     onclick="location.href='@Url.Action("DeleteCurrentTopic", "Forum",new {id=item.Id})'">Delete
                     </button>
                 </div>

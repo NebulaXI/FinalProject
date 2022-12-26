@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiProject.Core", "SkiProje
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiProject.Infrastructure", "SkiProject.Infrastructure\SkiProject.Infrastructure.csproj", "{A17F1E9C-5C92-4E75-BD6E-F06A9A708552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiProject.Test", "SkiProject.Test\SkiProject.Test.csproj", "{FDC455E3-256F-4D0E-940E-D615037632F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiProject.Test", "SkiProject.Test\SkiProject.Test.csproj", "{8F82FE71-B4BC-4CAF-B096-175B39B9EA23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{A17F1E9C-5C92-4E75-BD6E-F06A9A708552}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A17F1E9C-5C92-4E75-BD6E-F06A9A708552}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A17F1E9C-5C92-4E75-BD6E-F06A9A708552}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDC455E3-256F-4D0E-940E-D615037632F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDC455E3-256F-4D0E-940E-D615037632F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDC455E3-256F-4D0E-940E-D615037632F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDC455E3-256F-4D0E-940E-D615037632F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F82FE71-B4BC-4CAF-B096-175B39B9EA23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F82FE71-B4BC-4CAF-B096-175B39B9EA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F82FE71-B4BC-4CAF-B096-175B39B9EA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F82FE71-B4BC-4CAF-B096-175B39B9EA23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
