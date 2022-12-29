@@ -13,44 +13,17 @@ namespace SkiProject.Test.Mocks
 {
     public static class PostServiceMock
     {
-        public static IPostService AllTopics
-        {
-            get
-            {
-                var postServiceMock = new Mock<IPostService>();
-                postServiceMock.Setup(m => m.GetAllTopics())
-                    .ReturnsAsync(Mock.Of<List<ForumTopic>>());
+        //public static IPostService AllTopics
+        //{
+        //    get
+        //    {
+        //        var postMock = new Mock<IPostService>();
 
-                return postServiceMock.Object;
-            }
-        }
-        public static IPostService AllPosts
-        {
-            
-            get
-            {
-                var postService = new Mock<IPostService>();
-                postService.Setup(m=>m.GetAllPosts(It.IsAny<string>()))
-                    .ReturnsAsync(Mock.Of<List<Post>>());
-                return postService.Object;
-            }
-        }
-        public static IPostService PostService
-        {
-            get
-            {
-                var postServiceMock = new Mock<IPostService>();
-                return postServiceMock.Object;
-            }
-        }
+        //        postMock.SetupGet(p => p.)
+        //            .Returns(Mock.Of<Task<List<ForumTopic>>>);
 
-        public static IRepository Repo
-        {
-            get
-            {
-                var repo = new Mock<IRepository>();
-                return repo.Object;
-            }
-        }
+        //        return postMock.Object;
+        //    }
+        //}
     }
 }

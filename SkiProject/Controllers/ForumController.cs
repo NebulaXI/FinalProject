@@ -51,7 +51,9 @@ namespace SkiProject.Controllers
             {
                 title = HttpContext.Request.Cookies["visited_topic"];
             }
-            var posts = await postService.GetAllPosts(title);
+            var topic = await postService.GetCurrentTopic(title);
+            var posts = await postService.GetAllPosts(topic.Id);
+
             if (posts.Count>0)
             {
                 posts.OrderByDescending(t => t.Date);
@@ -88,7 +90,7 @@ namespace SkiProject.Controllers
                 TopicId = topic.Id,
                 Content=sanitizer.Sanitize(DTOmodel.Content),
                 CurrentTopic=topicTitle,
-                Posts= await postService.GetAllPosts(topicTitle)
+                Posts= await postService.GetAllPosts(topic.Id)
             };
            
             if (!ModelState.IsValid)

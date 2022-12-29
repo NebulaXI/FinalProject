@@ -24,7 +24,7 @@ namespace SkiProject.Core.Models
         [MaxLength(ContentMaxLength, ErrorMessage = "Single post cannot be more than 3500 characters.")]
         public string? Content { get; set; } = null!;
 
-        //public List<Post>? Posts { get; set; } = new List<Post>();
+        public List<Post>? Posts { get; set; } = new List<Post>();
         
         public string? CreatedByUserId { get; set; }=null!;
         [ForeignKey(nameof(CreatedByUserId))]

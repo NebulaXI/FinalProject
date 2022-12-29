@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using Microsoft.EntityFrameworkCore;
+using Moq;
+using SkiProject.Infrastructure.Data;
 using SkiProject.Infrastructure.Data.Common;
 using System;
 using System.Collections.Generic;
@@ -10,13 +12,6 @@ namespace SkiProject.Test.Mocks
 {
     public static class RepositoryMock
     {
-        public static IRepository Repo
-        {
-            get
-            {
-                var repo = new Mock<IRepository>();
-                return repo.Object;
-            }
-        }
+       
     }
 }

@@ -15,7 +15,7 @@ namespace SkiProject.Core.Contracts
         /// Returns  all forum topics
         /// </summary>
         /// <returns></returns>
-        Task<List<Post>> GetAllPosts(string title);
+        Task<List<Post>> GetAllPosts(int topicId);
 
         /// <summary>
         /// Returns all posts in a topic by topic name

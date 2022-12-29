@@ -14,14 +14,14 @@ namespace SkiProject.Test.Controller
 {
     public class ForumControllerTest
     {
-        [Fact]
-        public void Index_Should_Return_Task_IActionResult()
-        {
-            var forumController = new ForumController(PostServiceMock.AllTopics);
-            var result =forumController.Index();
-            Assert.NotNull(result);
-            Assert.IsType<Task<IActionResult>>(result);
-        }
+        //[Fact]
+        //public void Index_Should_Return_Task_IActionResult()
+        //{
+        //    var forumController = new ForumController(PostServiceMock.AllTopics);
+        //    var result =forumController.Index();
+        //    Assert.NotNull(result);
+        //    Assert.IsType<Task<IActionResult>>(result);
+        //}
 
         
     }

@@ -41,9 +41,9 @@ namespace SkiProject.Core.Services
         /// <param name="title"></param>
         /// <returns></returns>
 
-        public async Task<List<Post>> GetAllPosts(string title)
+        public async Task<List<Post>> GetAllPosts(int topicId)
         {
-            var posts = await repo.All<Post>().Where(o => o.Topic.Title == title).ToListAsync();
+            var posts = await repo.All<Post>().Where(o => o.TopicId == topicId).ToListAsync();
 
 
             return posts;
