@@ -14,7 +14,7 @@ ASP.NET 6.0 project about Bulgarian's winter resorts,which include information p
 &nbsp; &nbsp; &nbsp; - In the SkiProject.Infrastructure.Configuration there are some entities to seed the data base with information about the Resort page and information about the Shop's categories and gender lists. <br />
 &nbsp; &nbsp; &nbsp; - You need to register and login in order to use the the functionalities <br />
 
-👷 The project is under construction yet,there's a lot of work to be done:
+👷 The project is under construction yet,there's a lot of work to be done: <br />
 &nbsp; &nbsp; &nbsp; - Crete areas <br />
 &nbsp; &nbsp; &nbsp; - Use SignalR for the messages <br />
 &nbsp; &nbsp; &nbsp; - Extend the functionalities - edit user profile,account and advertisment confirmation <br />
