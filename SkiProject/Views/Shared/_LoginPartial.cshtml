@@ -10,7 +10,7 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        @if (ViewBag["IsNewMessage"].Equals(true))
+        @*@if (ViewBag["IsNewMessage"].Equals(true))
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" style="color:darkred" asp-area="" asp-controller="Message" asp-action="ShowChats">Messages</a>
@@ -21,7 +21,10 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Message" asp-action="ShowChats">Messages</a>
             </li>
-        }
+        }*@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Message" asp-action="ShowChats">Messages</a>
+        </li>
        
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Profile" asp-action="Index" title="Manage">Hello, @UserManager.GetUserName(User)</a>

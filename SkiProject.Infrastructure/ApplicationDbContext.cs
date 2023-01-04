@@ -90,12 +90,8 @@ namespace SkiProject.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CityConfiguration());
             modelBuilder.ApplyConfiguration(new SlopeConfiguration());
             modelBuilder.ApplyConfiguration(new PlaceToStayConfiguration());
-            modelBuilder.ApplyConfiguration(new ForumTopicsConfiguration());
-            modelBuilder.ApplyConfiguration(new PostConfiguration());
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            modelBuilder.ApplyConfiguration(new AdvertismentConfiguration());
 
             base.OnModelCreating(modelBuilder);
 

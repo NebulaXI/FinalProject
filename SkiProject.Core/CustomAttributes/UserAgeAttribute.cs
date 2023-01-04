@@ -20,7 +20,7 @@ namespace FinalProject.Core.Validations
         {
             context.Attributes.Add("data-val", "true");
             context.Attributes.Add("data-val-birthdate",
-            "User must be at least 18 years old.");
+            "User must be at least 16 years old.");
         }
 
         protected override ValidationResult IsValid
@@ -32,7 +32,7 @@ namespace FinalProject.Core.Validations
 
             if (userMade18.Date > today.Date)
             {
-                return new ValidationResult("User must be at least 18 years old.");
+                return new ValidationResult("User must be at least 16 years old.");
             }
             return ValidationResult.Success;
         }
