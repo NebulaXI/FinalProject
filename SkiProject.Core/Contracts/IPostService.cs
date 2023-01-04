@@ -24,12 +24,7 @@ namespace SkiProject.Core.Contracts
         /// <returns></returns>
         Task<List<ForumTopic>> GetAllTopics();
 
-        /// <summary>
-        /// Gets user by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<ApplicationUser> GetCurrentUser(string id);
+        
 
         /// <summary>
         /// Creates new post

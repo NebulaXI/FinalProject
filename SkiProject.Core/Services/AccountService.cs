@@ -24,12 +24,18 @@ namespace CoreProject.Core.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<ApplicationUser> GetCurrentUser(string userId)
+        public async Task<ApplicationUser> GetCurrentUserById(string userId)
         {
             var currentUser = await repo.GetByIdAsync<ApplicationUser>(userId);
             return currentUser;
         }
 
+        public async Task<ApplicationUser> GetCurrentUserByUsername(string username)
+        {
+            var users = repo.All<ApplicationUser>();
+            var user = users.FirstOrDefault(u => u.UserName == username);
+            return user;
+        }
         /// <summary>
         /// Updates the logged in user data in the database
         /// </summary>

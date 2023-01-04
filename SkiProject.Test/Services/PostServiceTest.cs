@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CoreProject.Core.Services;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using SkiProject.Controllers;
 using SkiProject.Core.Models;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace SkiProject.Test.Services
 {
@@ -79,7 +81,6 @@ namespace SkiProject.Test.Services
             var data = DBMock.Instance;
             var repo = new Repository(data);
             var postService = new PostService(repo);
-            var forumController = new ForumController(postService);
             var topics = new List<ForumTopic>();
             for (int i = 0; i < 4; i++)
             {
@@ -182,6 +183,7 @@ namespace SkiProject.Test.Services
             var data = DBMock.Instance;
             var repo = new Repository(data);
             var postService = new PostService(repo);
+            var accountService = new AccountService(repo);
             var users = new List<ApplicationUser>();
             for (int i = 0; i < 3; i++)
             {
@@ -203,7 +205,7 @@ namespace SkiProject.Test.Services
             data.SaveChanges();
 
 
-            var result = await postService.GetCurrentUser(userId);
+            var result = await accountService.GetCurrentUserById(userId);
 
 
             result.Should().NotBeNull();

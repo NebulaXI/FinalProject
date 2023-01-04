@@ -8,15 +8,18 @@ namespace SkiProject.Controllers
     public class ProfileController : BaseController
     {
         private readonly IMessageService mesService;
-        public ProfileController(IMessageService _mesService)
+        private readonly IAccountService accountService;
+
+        public ProfileController(IMessageService _mesService, IAccountService _accountService)
         {
             this.mesService = _mesService;
+            this.accountService = _accountService;
         }
         public async Task<IActionResult> Index()
         {
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await mesService.FindUserById(userId);
+            var user = await accountService.GetCurrentUserById(userId);
             var model = new ProfileViewModel()
             {
                 UserName = user.UserName,
@@ -30,7 +33,7 @@ namespace SkiProject.Controllers
 
         public async Task<IActionResult> ViewOtherProfile(string userId)
         {
-            var user = await mesService.FindUserById(userId);
+            var user = await accountService.GetCurrentUserById(userId);
             HttpContext.Response.Cookies.Append("visited_profile", user.UserName);
             var model = new ProfileViewModel()
             {
@@ -43,7 +46,7 @@ namespace SkiProject.Controllers
         }
         public async Task<IActionResult> ViewOtherProfileByUsername(string username)
         {
-            var user = await mesService.FindUserByName(username);
+            var user = await accountService.GetCurrentUserByUsername(username);
             HttpContext.Response.Cookies.Append("visited_profile", user.UserName);
             var model = new ProfileViewModel()
             {
@@ -66,9 +69,9 @@ namespace SkiProject.Controllers
         {
 
             var senderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var sender = await mesService.FindUserById(senderId);
+            var sender = await accountService.GetCurrentUserById(senderId);
             var receiverUserName = HttpContext.Request.Cookies["visited_profile"];
-            var receiver = await mesService.FindUserByName(receiverUserName);
+            var receiver = await accountService.GetCurrentUserByUsername(receiverUserName);
             var model = new SendMessageModel()
             {
                 Content = DTOmodel.Content,

@@ -101,12 +101,7 @@ namespace SkiProject.Core.Contracts
         /// <returns></returns>
         Task<Product> GetLastProductByUserId(string userId);
 
-        /// <summary>
-        /// Gets user by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<ApplicationUser> GetCurrentUser(string id);
+        
 
         /// <summary>
         /// Creates new advertisment
@@ -136,8 +131,29 @@ namespace SkiProject.Core.Contracts
         /// <param name="id"></param>
         /// <returns></returns>
         Task<Product> GetProductById(int id);
-        Task<IEnumerable<byte[]>> GetImageData(int productId);
-        Task<Image> byteArrayToImage(byte[] bytesArr);
-        Task<List<string>> GenerateImageUrls(List<Image> images);
+        /// <summary>
+        /// Returns a collection of byte arrays of all images,which have the same product id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<byte[]>> GetImagesData(int productId);
+        /// <summary>
+        /// Returns byte array of a particular image by image id
+        /// </summary>
+        /// <param name="imageId"></param>
+        /// <returns></returns>
+        Task<byte[]> GetImageData(int imageId);
+        /// <summary>
+        /// Remove an Advertisment by it's id
+        /// </summary>
+        /// <param name="adId"></param>
+        /// <returns></returns>
+        Task DeleteAdvertisment(int adId);
+        /// <summary>
+        /// Returns a collection of ProductImage,which have the same product id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        Task<IEnumerable<ProductImage>> GetImagesByProductId(int productId);
     }
 }

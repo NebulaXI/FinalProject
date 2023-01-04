@@ -12,9 +12,11 @@ namespace SkiProject.Controllers
     public class ForumController : BaseController
     {
         private readonly IPostService postService;
-        public ForumController(IPostService _postService)
+        private readonly IAccountService accountService;
+        public ForumController(IPostService _postService,IAccountService _accountService)
         {
             this.postService = _postService;
+            this.accountService = _accountService;
         }
 
        
@@ -65,7 +67,7 @@ namespace SkiProject.Controllers
             foreach (var item in posts)
             {
                 var userId = item.UserId;
-                var user = await postService.GetCurrentUser(userId);
+                var user = await accountService.GetCurrentUserById(userId);
                 item.Username = user.UserName;
             }
             PostViewModel model = new PostViewModel() { Posts=posts,CurrentTopic=title};
@@ -84,7 +86,7 @@ namespace SkiProject.Controllers
             var model = new PostViewModel()
             {
                 UserId =sanitizer.Sanitize( userId),
-                User = await postService.GetCurrentUser(userId),
+                User = await accountService.GetCurrentUserById(userId),
                 Date = DateTime.Now,
                 Topic = topic,
                 TopicId = topic.Id,
@@ -120,7 +122,7 @@ namespace SkiProject.Controllers
                 Title =sanitizer.Sanitize( DTOModel.Title),
                 Content =sanitizer.Sanitize( DTOModel.Content),
                 CreatedByUserId=userId,
-                CreatedByUser= await postService.GetCurrentUser(userId),
+                CreatedByUser= await accountService.GetCurrentUserById(userId),
                 CreatedOn=DateTime.Now,
                 LastUpdated=DateTime.Now,
                 CommentsCount=1

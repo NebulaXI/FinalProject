@@ -49,17 +49,6 @@ namespace SkiProject.Core.Services
             return posts;
         }
 
-        /// <summary>
-        /// Gets user by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        
-        public async Task<ApplicationUser> GetCurrentUser(string id)
-        {
-            var user = repo.All<ApplicationUser>().FirstOrDefault(o => o.Id == id);
-            return user;
-        }
         
         /// <summary>
         /// Adds new post to the database

@@ -17,9 +17,11 @@ namespace SkiProject.Controllers
     {
 
         private readonly IShopService shopService;
-        public ShopController(IShopService _shopService)
+        private readonly IAccountService accountService;
+        public ShopController(IShopService _shopService,IAccountService _accountService)
         {
             this.shopService = _shopService;
+            this.accountService = _accountService;
         }
         public async Task<IActionResult> Index()
         {
@@ -85,12 +87,12 @@ namespace SkiProject.Controllers
                 foreach (var file in Request.Form.Files)
                 {
                     var img = new ProductImage();
-                    img.ImageName = file.FileName;
+                    img.ImageName = Guid.NewGuid().ToString();
 
                     MemoryStream ms = new MemoryStream();
                     file.CopyTo(ms);
                     img.ImageData = ms.ToArray();
-
+                    
                     ms.Close();
                     ms.Dispose();
 
@@ -115,7 +117,7 @@ namespace SkiProject.Controllers
                 ProductImages =productImages,
                 CreatedByUserId=userId,
                 Title=sanitizer.Sanitize(DTOModel.Title),
-                User=await shopService.GetCurrentUser(userId),
+                User=await accountService.GetCurrentUserById(userId),
                 CreatedOn=DateTime.Now,
                 LastUpdatedOn=DateTime.Now
             };
@@ -134,20 +136,15 @@ namespace SkiProject.Controllers
 
         public async Task<IActionResult> ShowAdvertisment(int AdvertismentId)
         {
+            TempData["currentUserId"]= User.FindFirstValue(ClaimTypes.NameIdentifier);
             var ad = await shopService.GetAdvertismentById(AdvertismentId);
             var product = await shopService.GetProductById(ad.ProductId);
-            var imagesData = await shopService.GetImageData(ad.ProductId);
+            var imagesData = await shopService.GetImagesData(ad.ProductId);
             var ownerId = ad.UserId;
-            var owner = await shopService.GetCurrentUser(ownerId);
+            var owner = await accountService.GetCurrentUserById(ownerId);
             var ownerUserName = owner.UserName;
             HttpContext.Response.Cookies.Append("visited_ad_owner", ownerUserName);
-            var images = new List<Image>();
-            foreach (var item in imagesData)
-            {
-                images.Add(await shopService.byteArrayToImage(item));
-            }
-           // var urls = await shopService.GenerateImageUrls(images);
-            
+           
             var model = new ShowAdvertismentViewModel()
             {
                 CategoryId = product.CategoryId,
@@ -161,14 +158,23 @@ namespace SkiProject.Controllers
                 User = owner,
                 CreatedOn = ad.CreatedOn,
                 LastUpdatedOn = ad.LastUpdatedOn,
-                ImagesData= imagesData,
-                Images=images
+                AdvertismentId=AdvertismentId,
+                ImageArrays=imagesData
             };
 
             return View(model);
         }
 
-
+        [HttpGet]
+        public async Task<IActionResult> DeleteAdvertisment(string createdByUserId,int adId)
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId==createdByUserId)
+            {
+                await shopService.DeleteAdvertisment(adId);
+            }
+            return RedirectToAction("Index");
+        }
         
     }
 }

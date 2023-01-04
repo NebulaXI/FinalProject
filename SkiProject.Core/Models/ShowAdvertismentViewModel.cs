@@ -23,7 +23,6 @@ namespace SkiProject.Core.Models
             [Required]
             [MaxLength(DescriptionMaxLength, ErrorMessage = "Description cannot be more than 3500 characters.")]
             public string? Description {get;set;}
-            public IEnumerable<byte[]>? ImagesData { get; set; }
             public string? CreatedByUserId {get; set;}
             [Required]
             [MaxLength(AdvertismentTitleMaxLength, ErrorMessage = "Title cannot be more than 100 characters.")]
@@ -32,7 +31,8 @@ namespace SkiProject.Core.Models
             public DateTime CreatedOn {get; set;}
             public DateTime LastUpdatedOn {get; set;}
             [Required]    
-            public List<Image>? Images { get; set; }
+            public int AdvertismentId { get; set; }
+            public IEnumerable<byte[]> ImageArrays { get; set; }
 
     }
 }

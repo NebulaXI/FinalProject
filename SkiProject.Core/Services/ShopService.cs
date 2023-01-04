@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
 using SkiProject.Infrastructure.Data.Common;
@@ -14,6 +15,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,16 +29,7 @@ namespace SkiProject.Core.Services
             this.repo = _repo;
         }
 
-        /// <summary>
-        /// Gets user by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<ApplicationUser> GetCurrentUser(string id)
-        {
-            var user = repo.All<ApplicationUser>().FirstOrDefault(o => o.Id == id);
-            return user;
-        }
+        
 
         /// <summary>
         /// Returns all advertisments
@@ -318,10 +311,15 @@ namespace SkiProject.Core.Services
             var product = products.FirstOrDefault(p => p.Id == id);
             return product;
         }
-
-        public async Task<IEnumerable<byte[]>> GetImageData(int productId)
+        /// <summary>
+        /// Returns a collection of byte arrays of all images,which have the same product id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<byte[]>> GetImagesData(int productId)
         {
-            var images = repo.All<ProductImage>().Where(p => p.ProductId == productId);
+            
+            var images = await GetImagesByProductId(productId);
             var imagesData = new List<byte[]>();
             foreach (var image in images)
             {
@@ -329,42 +327,39 @@ namespace SkiProject.Core.Services
             }
             return imagesData;
         }
-        public async Task<Image> byteArrayToImage(byte[] bytesArr)
+        /// <summary>
+        /// Returns byte array of a particular image by image id
+        /// </summary>
+        /// <param name="imageId"></param>
+        /// <returns></returns>
+        public async Task<byte[]> GetImageData(int imageId)
         {
-            string folderPath = ("~/Images/"); 
-            string fileName = "Image.jpg";
-            string imagePath = folderPath + fileName;
-            using (MemoryStream memstr = new MemoryStream(bytesArr))
-            {
-                Image img = Image.FromStream(memstr);
-                //img.Save(imagePath, ImageFormat.Jpeg);
-                return img;
-            }
-
+            var image = await repo.GetByIdAsync<ProductImage>(imageId);
+            
+            return image.ImageData;
         }
-        public async Task<List<string>> GenerateImageUrls(List<Image> images)
+        /// <summary>
+        /// Returns a collection of ProductImage,which have the same product id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ProductImage>> GetImagesByProductId(int productId)
         {
-            var urls = new List<string>();
-            int n = 1;
-            foreach (var img in images)
-            {
-                if (Directory.GetFiles(@"Images/Ads").Length == 0)
-                {
-                    img.Save($"/Images/Ads/image{n}", ImageFormat.Jpeg);
-                    n++;
-                    urls.Add($"/Images/Ads/image{n}");
-                }
-                //else
-                //{
-                //    var files = Directory.GetFiles(@"Images/Ads");
-                //    foreach (var file in files)
-                //    {
-                //        file.Replace()
-                //    }
-                //}
-                
-            }
-            return urls;
+            var images = repo.All<ProductImage>().Where(p => p.ProductId == productId);
+            images.ToList();
+            return images;
+        }
+
+        /// <summary>
+        /// Remove an Advertisment by it's id
+        /// </summary>
+        /// <param name="adId"></param>
+        /// <returns></returns>
+        public async Task DeleteAdvertisment(int adId)
+        {
+            var ad = await GetAdvertismentById(adId);
+            repo.Delete(ad);
+            await repo.SaveChangesAsync();
         }
     }
 }

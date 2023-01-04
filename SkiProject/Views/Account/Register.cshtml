@@ -66,7 +66,7 @@
                                         <span asp-validation-for="PasswordConfirmed" class="text-danger"></span>
                                     </div>
                                     <div class="form-outline mb-4">
-                                         <input asp-for="Birthdate" type="date" min="1910-01-01" class="hasDatepicker" autocomplete="passwordConfirmed" aria-required="true" />
+                                         <input asp-for="Birthdate" type="date" min="1930-01-01" class="hasDatepicker" autocomplete="birthdate" aria-required="true" />
                                          <label asp-for="Birthdate"></label>
                                          <span asp-validation-for="Birthdate" class="text-danger"></span>
                                     </div>
@@ -88,4 +88,6 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/AgeValidate.js" ></script>
 }
+ 

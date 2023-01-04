@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using static SkiProject.Infrastructure.Validations.DataConstants.ApplicationUser;
+using FinalProject.Core.Validations;
 
 namespace SkiProject.Core.Models
 {
@@ -33,6 +34,7 @@ namespace SkiProject.Core.Models
         public string LastName { get; set; } = null!;
 
         [Required]
+        [UserAge]
         public DateTime Birthdate { get; set; }
 
         //[Required]

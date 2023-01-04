@@ -1,4 +1,5 @@
-﻿using SkiProject.Core.Models;
+﻿using CoreProject.Core.Services;
+using SkiProject.Core.Models;
 using SkiProject.Core.Services;
 using SkiProject.Infrastructure.Data.Common;
 using SkiProject.Infrastructure.Data.Models;
@@ -9,52 +10,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace SkiProject.Test.Services
 {
     public class MessageServiceTest
     {
-        [Fact]
-        public async Task FindUserByNameShouldReturnUser()
-        {
-            var data = DBMock.Instance;
-            var repo = new Repository(data);
-            var messageService = new MessageService(repo);
-            var user1 = new ApplicationUser()
-            {
-                FirstName = "1",
-                LastName = "1",
-                Birthday = DateTime.Now,
-                UserName = "1",
-                Email = $"1@mail.com"
-            };
-            data.Users.Add(user1);
-            var user2 = new ApplicationUser()
-            {
-                FirstName = "2",
-                LastName = "2",
-                Birthday = DateTime.Now,
-                UserName = "2",
-                Email = $"2@mail.com"
-            };
-            data.Users.Add(user2);
-            await data.SaveChangesAsync();
-
-            var resultByName = await messageService.FindUserByName(user1.FirstName);
-            var resultById = await messageService.FindUserById(user2.Id);
-
-            Assert.NotNull(resultByName);
-            Assert.Equal(user1.FirstName, resultByName.FirstName);
-            Assert.NotNull(resultById);
-            Assert.Equal(user2.Id, resultById.Id);
-        }
+      
 
         [Fact]
         public async Task AddMessageInDb()
         {
             var data = DBMock.Instance;
             var repo = new Repository(data);
-            var messageService = new MessageService(repo);
+            var accountService = new AccountService(repo);
+            var messageService = new MessageService(repo,accountService);
             var sender = new ApplicationUser()
             {
                 FirstName = "1",
@@ -92,7 +62,8 @@ namespace SkiProject.Test.Services
         {
             var data = DBMock.Instance;
             var repo = new Repository(data);
-            var messageService = new MessageService(repo);
+            var accountService = new AccountService(repo);
+            var messageService = new MessageService(repo,accountService);
             var user1 = new ApplicationUser()
             {
                 FirstName = "1",
@@ -120,7 +91,8 @@ namespace SkiProject.Test.Services
         {
             var data = DBMock.Instance;
             var repo = new Repository(data);
-            var messageService = new MessageService(repo);
+            var accountService = new AccountService(repo);
+            var messageService = new MessageService(repo,accountService);
             var user1 = new ApplicationUser()
             {
                 FirstName = "1",

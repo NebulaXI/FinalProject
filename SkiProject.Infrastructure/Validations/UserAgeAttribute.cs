@@ -20,7 +20,7 @@ namespace SkilProject.Infrastructure.Validations
         {
             context.Attributes.Add("data-val", "true");
             context.Attributes.Add("data-val-birthdate",
-            "User must be at least 18 years old.");
+            "User must be at least 16 years old.");
         }
 
         protected override ValidationResult IsValid
@@ -28,11 +28,11 @@ namespace SkilProject.Infrastructure.Validations
         {
             DateTime birthdateInput = DateTime.Parse(value.ToString());
             var today = DateTime.Today;
-            var userMade18 = birthdateInput.AddYears(18);
+            var userMade16 = birthdateInput.AddYears(16);
 
-            if (userMade18.Date > today.Date)
+            if (userMade16.Date > today.Date)
             {
-                return new ValidationResult("User must be at least 18 years old.");
+                return new ValidationResult("User must be at least 16 years old.");
             }
             return ValidationResult.Success;
         }

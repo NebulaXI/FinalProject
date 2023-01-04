@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using static SkiProject.Infrastructure.Validations.DataConstants.ApplicationUser;
 using SkiProject.Infrastructure.Data.Models.Account;
 using SkiProject.Infrastructure.Data.Models.Shop;
+using SkilProject.Infrastructure.Validations;
 
 namespace SkiProject.Infrastructure.Data.Models.Account
 {
@@ -33,6 +34,7 @@ namespace SkiProject.Infrastructure.Data.Models.Account
 
         [Required]
         [Column(TypeName = "datetime")]
+        [UserAge]
         public DateTime Birthday { get; set; }
         public string? Gender { get; set; }
 

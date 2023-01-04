@@ -11,25 +11,7 @@ namespace SkiProject.Core.Contracts
 {
     public interface IMessageService
     {
-        /// <summary>
-        /// Gets the user by username
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        Task<ApplicationUser> FindUserByName(string userName);
-
-        /// <summary>
-        /// Gets the user by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<ApplicationUser> FindUserById(string id);
-
-        /// <summary>
-        /// Adds message to the database
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+       
         Task<Message> AddMessageInDB(SendMessageModel model);
 
         /// <summary>
@@ -61,5 +43,8 @@ namespace SkiProject.Core.Contracts
         /// <param name="user1Id"></param>
         /// <returns></returns>
         Task<List<Message>> GetMessagesBetweenUsers(string user2Id, string user1Id);
+
+        Task<bool> CheckIfAddMessageInDBIsSuccessful(ApplicationUser sender, int senderMesCountBefore,
+            ApplicationUser receiver, int receiverMesCountBefore);
     }
 }

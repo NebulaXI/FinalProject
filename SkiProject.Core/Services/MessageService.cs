@@ -1,4 +1,5 @@
-﻿using SkiProject.Core.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
 using SkiProject.Infrastructure.Data.Common;
 using SkiProject.Infrastructure.Data.Models;
@@ -16,33 +17,14 @@ namespace SkiProject.Core.Services
     public class MessageService:IMessageService
     {
         private readonly IRepository repo;
-        public MessageService(IRepository _repo)
+        private readonly IAccountService accountService;
+        public MessageService(IRepository _repo,IAccountService _accountService)
         {
             this.repo = _repo;
+            this.accountService = _accountService;
         }
 
-        /// <summary>
-        /// Gets the user by username
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public async Task<ApplicationUser> FindUserByName(string userName)
-        {
-            var users = repo.All<ApplicationUser>();
-            var user = users.FirstOrDefault(u => u.UserName == userName);
-            return user;
-        }
-
-        /// <summary>
-        /// Gets the user by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<ApplicationUser> FindUserById(string id)
-        {
-            var user =await repo.GetByIdAsync<ApplicationUser>(id);
-            return user;
-        }
+     
 
         /// <summary>
         /// Adds message to the database
@@ -142,8 +124,8 @@ namespace SkiProject.Core.Services
             var chats = new List<ChatViewModel>();
             foreach (var item in chat)
             {
-                var user1 = await FindUserById(item.Value);
-                var user2 = await FindUserById(item.Key);
+                var user1 = await accountService.GetCurrentUserById(item.Value);
+                var user2 = await accountService.GetCurrentUserById(item.Key);
                 var chatModel = new ChatViewModel()
                 {
                     User1 = user1,
@@ -172,5 +154,21 @@ namespace SkiProject.Core.Services
             return mes;
         }
        
+        public async Task<bool> CheckIfAddMessageInDBIsSuccessful(ApplicationUser sender,int senderMesCountBefore,
+            ApplicationUser receiver,int receiverMesCountBefore)
+        {
+            var mesOfSender = await GetMessagesOfUser(sender);
+            var mesOfReceiver = await GetMessagesOfUser(receiver);
+            if (mesOfSender.Count()>senderMesCountBefore && mesOfReceiver.Count()>receiverMesCountBefore)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task ChangeReceiverLayout(ApplicationUser receiver)
+        {
+            
+        }
     }
 }
