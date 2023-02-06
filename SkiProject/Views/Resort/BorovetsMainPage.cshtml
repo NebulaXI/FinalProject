@@ -1,6 +1,58 @@
-﻿<div class="text-center">
+﻿@model ResortViewModel
+<div class="text-center">
     <img src="/Images/BorovetsMapBulgaria.png" class="rounded float-left" style="max-width: 28rem;" alt="Map of Bulgaria,Borovets">
-    <a asp-controller="Resort" asp-action="GetSlopePage" class="link-info">Slopes</a>
+    <button class="show-modal">Slopes</button>
+    <div class="slope hidden">
+        <button class="close-modal">&times;</button>
+        <h3>Prices season 2022/2023:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Day pass(kids under 7y and adultes over 60y)</th>
+                    <th scope="col">Regular day pass</th>
+                    <th scope="col">Season pass(kids under 7y and adultes over 60y)</th>
+                    <th scope="col">Regular season pass</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Slope.PricePerDayChildren</td>
+                    <td>@Model.Slope.PricePerDayAdult</td>
+                    <td>@Model.Slope.PriceForSeasonChildren</td>
+                    <td>@Model.Slope.PriceForSeasonAdult</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Day pass(kids under 7y and adultes over 60y)</th>
+                    <th scope="col">Regular day pass</th>
+                    <th scope="col">Season pass(kids under 7y and adultes over 60y)</th>
+                    <th scope="col">Regular season pass</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Slope.PricePerDayChildren</td>
+                    <td>@Model.Slope.PricePerDayAdult</td>
+                    <td>@Model.Slope.PriceForSeasonChildren</td>
+                    <td>@Model.Slope.PriceForSeasonAdult</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button class="show-camera" onclick="redirectToCamera('@Model.CameraUrl')">Web camera</button>
+    <div class="overlay hidden"></div>
     <a asp-controller="Resort" asp-action="GetPlacesToStay" class="link-info">Places to stay</a>
-    <a asp-controller="Resort" asp-action="GetWebCamera" class="link-info">Web camera</a>
+
+
+
 </div>
+
+<script src="~/js/btnPopUp.js?v=1"></script>
+<script type="text/javascript">
+    function redirectToCamera(url) {
+        window.location.href = url;
+    };</script>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BingMapsRESTToolkit;
+using Microsoft.AspNetCore.Mvc;
 using SkiProject.Core.Contracts;
 using SkiProject.Core.Models;
 
@@ -18,7 +19,8 @@ namespace SkiProject.Controllers
         }
 
 
-        public IActionResult BanskoMainPage()
+
+        public async Task<IActionResult> BanskoMainPage()
         {
             LocationViewModel model1 = new LocationViewModel()
             {
@@ -27,12 +29,19 @@ namespace SkiProject.Controllers
                 Latitude = 41.8429765,
                 Longitude = 23.4849658
             };
+           
             ResortViewModel model = new ResortViewModel(){ Name = "Bansko" };
+
+            var resort = await resortService.GetCurrentResort(model.Name);
+            var slope = await resortService.GetSlope(resort.Id);
+            model.Slope= slope;
+            model.CameraUrl = resort.WebCamera;
+            model.Description = "Bansko,Bulgaria";
             HttpContext.Response.Cookies.Append("visited_resort", "Bansko");
-            return View();
+            return View(model);
         }
 
-        public IActionResult PamporovoMainPage()
+        public async Task<IActionResult> PamporovoMainPage()
         {
             LocationViewModel model1 = new LocationViewModel()
             {
@@ -43,11 +52,16 @@ namespace SkiProject.Controllers
             };
 
             ResortViewModel model = new ResortViewModel() { Name = "Pamporovo" };
+            var resort = await resortService.GetCurrentResort(model.Name);
+            var slope = await resortService.GetSlope(resort.Id);
+            model.Slope = slope;
+            model.CameraUrl = resort.WebCamera;
+            model.Description = "Pamporovo,Bulgaria";
 
             HttpContext.Response.Cookies.Append("visited_resort", "Pamporovo");
-            return View();
+            return View(model);
         }
-        public IActionResult BorovetsMainPage()
+        public async Task<IActionResult> BorovetsMainPage()
         {
             LocationViewModel model1 = new LocationViewModel()
             {
@@ -58,11 +72,16 @@ namespace SkiProject.Controllers
             };
 
             ResortViewModel model = new ResortViewModel() { Name = "Borovets" };
+            var resort = await resortService.GetCurrentResort(model.Name);
+            var slope = await resortService.GetSlope(resort.Id);
+            model.Slope = slope;
+            model.CameraUrl = resort.WebCamera;
+            model.Description = "Borovets,Bulgaria";
 
             HttpContext.Response.Cookies.Append("visited_resort", "Borovets");
-            return View();
+            return View(model);
         }
-        public IActionResult PanichishteMainPage()
+        public async Task<IActionResult> PanichishteMainPage()
         {
             LocationViewModel model1 = new LocationViewModel()
             {
@@ -73,19 +92,16 @@ namespace SkiProject.Controllers
             };
 
             ResortViewModel model = new ResortViewModel() { Name = "Panichishte" };
-
-            HttpContext.Response.Cookies.Append("visited_resort", "Panichishte");
-            return View();
-        }
-
-        public async Task<IActionResult> GetSlopePage()
-        {
-            var lastVisitedResort = HttpContext.Request.Cookies["visited_resort"];
-            var resort = await resortService.GetCurrentResort(lastVisitedResort);
+            var resort = await resortService.GetCurrentResort(model.Name);
             var slope = await resortService.GetSlope(resort.Id);
-            ResortViewModel model = new ResortViewModel() { Name = lastVisitedResort,Slope=slope };
+            model.Slope = slope;
+            model.CameraUrl = resort.WebCamera;
+            model.Description = "Panichishte,Bulgaria";
+            HttpContext.Response.Cookies.Append("visited_resort", "Panichishte");
             return View(model);
         }
+
+        
 
         public async Task<IActionResult> GetPlacesToStay()
         {
@@ -95,12 +111,6 @@ namespace SkiProject.Controllers
             ResortViewModel model = new ResortViewModel() { PlacesToStay=placesToStay,Name=lastVisitedResort };
             return View(model);
         }
-        public async Task<IActionResult> GetWebCamera()
-        {
-            var lastVisitedResort = HttpContext.Request.Cookies["visited_resort"];
-            var resort = await resortService.GetCurrentResort(lastVisitedResort);
-            var cameraUrl = resort.WebCamera;
-            return Redirect(cameraUrl);
-        }
+        
     }
 }

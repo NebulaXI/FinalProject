@@ -12,6 +12,8 @@ namespace SkiProject.Core.Models
         public string? Name { get; set; }
         public List<PlaceToStay>?  PlacesToStay { get; set; }
         public Slope? Slope { get; set; }
+        public string CameraUrl { get; set; }
+        public string Description { get; set; }
 
     }
 }
