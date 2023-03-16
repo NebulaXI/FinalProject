@@ -12,8 +12,8 @@ using SkiProject.Infrastructure.Data;
 namespace SkiProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221125091435_UpdateCityData")]
-    partial class UpdateCityData
+    [Migration("20230305212809_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -189,6 +189,9 @@ namespace SkiProject.Infrastructure.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(45)
@@ -217,6 +220,9 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("ProfileCreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -239,71 +245,6 @@ namespace SkiProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Account.UserBankCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CVV")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CardHolderName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Month")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Year")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("BankCards");
-                });
-
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Account.Wallet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<decimal>("AmountInWallet")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.City", b =>
@@ -337,7 +278,7 @@ namespace SkiProject.Infrastructure.Migrations
                         {
                             Id = 2,
                             Name = "Borovets",
-                            WebCamera = "https://www.borovets-bg.com/en/page/info/lifts-trails/weather-webcams-avalanche-warning"
+                            WebCamera = "https://weather-webcam.eu/borovec-hotel-ela-online-kamea-rila-na-jivo/"
                         },
                         new
                         {
@@ -351,6 +292,73 @@ namespace SkiProject.Infrastructure.Migrations
                             Name = "Panichishte",
                             WebCamera = "http://free-webcambg.com/Rilski-ezera-02-webcam-live-online-camera-hija-Pionerska-Panichishte-Rila-kameri-na-jivo-vremeto-weather.htm"
                         });
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.ForumTopic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CommentsCount")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.ToTable("Topics");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(3500)
+                        .HasColumnType("nvarchar(3500)");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.PlaceToStay", b =>
@@ -480,6 +488,41 @@ namespace SkiProject.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(3500)
+                        .HasColumnType("nvarchar(3500)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TopicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TopicId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -523,6 +566,212 @@ namespace SkiProject.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Advertisment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("LastUpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Advertisments");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NameOfCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameOfCategory = "Jackets"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameOfCategory = "Pants"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NameOfCategory = "Shoes"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NameOfCategory = "Glasses"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            NameOfCategory = "Helmets"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            NameOfCategory = "Underwear"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            NameOfCategory = "Skis"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            NameOfCategory = "Snowboards"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            NameOfCategory = "Others"
+                        });
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NameOfGender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NameOfGender = "Kids"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NameOfGender = "Women"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NameOfGender = "Men"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NameOfGender = "Unisex"
+                        });
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(3500)
+                        .HasColumnType("nvarchar(3500)");
+
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("GenderId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Slope", b =>
@@ -649,26 +898,25 @@ namespace SkiProject.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Account.UserBankCard", b =>
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.ForumTopic", b =>
                 {
-                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
-                        .WithOne("BankCard")
-                        .HasForeignKey("SkiProject.Infrastructure.Data.Models.Account.UserBankCard", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "CreatedByUser")
+                        .WithMany("CreatedTopics")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("User");
+                    b.Navigation("CreatedByUser");
                 });
 
-            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Account.Wallet", b =>
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Message", b =>
                 {
-                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
-                        .WithOne("Wallet")
-                        .HasForeignKey("SkiProject.Infrastructure.Data.Models.Account.Wallet", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "Receiver")
+                        .WithMany("Messages")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Receiver");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.PlaceToStay", b =>
@@ -680,6 +928,25 @@ namespace SkiProject.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Post", b =>
+                {
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.ForumTopic", "Topic")
+                        .WithMany("Posts")
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Topic");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Reservation", b =>
@@ -701,6 +968,58 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Advertisment", b =>
+                {
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Shop.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
+                        .WithMany("CreatedAdvertisments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Product", b =>
+                {
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Shop.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", "User")
+                        .WithMany("CreatedProducts")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Shop.Gender", "Gender")
+                        .WithMany("Products")
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.ProductImage", b =>
+                {
+                    b.HasOne("SkiProject.Infrastructure.Data.Models.Shop.Product", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Slope", b =>
                 {
                     b.HasOne("SkiProject.Infrastructure.Data.Models.City", "City")
@@ -714,11 +1033,17 @@ namespace SkiProject.Infrastructure.Migrations
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
-                    b.Navigation("BankCard");
+                    b.Navigation("CreatedAdvertisments");
+
+                    b.Navigation("CreatedProducts");
+
+                    b.Navigation("CreatedTopics");
+
+                    b.Navigation("Messages");
+
+                    b.Navigation("Posts");
 
                     b.Navigation("Reservations");
-
-                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.City", b =>
@@ -728,9 +1053,29 @@ namespace SkiProject.Infrastructure.Migrations
                     b.Navigation("Slope");
                 });
 
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.ForumTopic", b =>
+                {
+                    b.Navigation("Posts");
+                });
+
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.PlaceToStay", b =>
                 {
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Gender", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

@@ -326,26 +326,6 @@ namespace SkiProject.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Topics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CommentsCount = 3,
-                            CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5224),
-                            LastUpdated = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5256),
-                            Title = "First topic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CommentsCount = 1,
-                            CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            CreatedOn = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5260),
-                            LastUpdated = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5262),
-                            Title = "Second topic"
-                        });
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Message", b =>
@@ -539,32 +519,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "1 topic,1 comment",
-                            Date = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5324),
-                            TopicId = 1,
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Content = "1 topic,2 comment",
-                            Date = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5328),
-                            TopicId = 1,
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Content = "2 topic,1 comment",
-                            Date = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5330),
-                            TopicId = 2,
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        });
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Reservation", b =>
@@ -651,26 +605,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Advertisments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedOn = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5568),
-                            LastUpdatedOn = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5570),
-                            ProductId = 1,
-                            Title = "Woman jacket",
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedOn = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5573),
-                            LastUpdatedOn = new DateTime(2022, 12, 18, 13, 36, 20, 126, DateTimeKind.Local).AddTicks(5575),
-                            ProductId = 2,
-                            Title = "Men pants",
-                            UserId = "d33b5866-1720-4e84-bfba-977e3a864f86"
-                        });
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.Category", b =>
@@ -810,26 +744,6 @@ namespace SkiProject.Infrastructure.Migrations
                     b.HasIndex("GenderId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            Description = "Woman jacket",
-                            GenderId = 2,
-                            Price = 120.0m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 2,
-                            CreatedByUserId = "d33b5866-1720-4e84-bfba-977e3a864f86",
-                            Description = "Men pants",
-                            GenderId = 3,
-                            Price = 80.0m
-                        });
                 });
 
             modelBuilder.Entity("SkiProject.Infrastructure.Data.Models.Shop.ProductImage", b =>
