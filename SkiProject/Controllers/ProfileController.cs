@@ -24,7 +24,8 @@ namespace SkiProject.Controllers
             {
                 UserName = user.UserName,
                 Birthday = user.Birthday.Date,
-                CreatedOn = user.ProfileCreatedOn.Value.Date
+                CreatedOn = user.ProfileCreatedOn.Value.Date,
+                Gender=user.Gender
 
             };
 
@@ -39,7 +40,8 @@ namespace SkiProject.Controllers
             {
                 UserName = user.UserName,
                 Birthday = user.Birthday.Date,
-                CreatedOn = user.ProfileCreatedOn.Value.Date
+                CreatedOn = user.ProfileCreatedOn.Value.Date,
+                Gender=user.Gender
 
             };
             return View("Index", model);

@@ -20,7 +20,8 @@ namespace SkiProject.Core.Models
 
         [ForeignKey(nameof(UserId))]
         public ApplicationUser? User { get; set; }
-        public string Username { get; set; }
+
+        public string? Username { get; set; }
 
         public DateTime Date { get; set; }
 

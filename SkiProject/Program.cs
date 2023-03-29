@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
 using Microsoft.AspNetCore.Mvc;
 using SkiProject.Hubs;
+using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 })
     //.AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddSendGrid(options =>
+    options.ApiKey = builder.Configuration.GetValue<string>("SendGridApiKey")
+                     ?? throw new Exception("The 'SendGridApiKey' is not configured"));
 
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {

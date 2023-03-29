@@ -12,7 +12,7 @@ using SkiProject.Infrastructure.Data;
 namespace SkiProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305212809_Initial")]
+    [Migration("20230321050214_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

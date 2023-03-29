@@ -39,7 +39,7 @@
     
 </div>
 <form asp-controller="Forum" asp-action="AddPost" method="post">
-    @*<input type="hidden" name="currentTopicTitle" value="@Model.CurrentTopic" />*@
+    <input type="hidden" name="currentTopicTitle" value="@Model.CurrentTopic" />
     <div class="col-6">
         <label asp-for="Content">Post</label>
         <textarea asp-for="Content" class="form-control"></textarea>

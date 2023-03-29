@@ -10,19 +10,26 @@ using Microsoft.AspNetCore.Mvc;
 using Ganss.Xss;
 using SkiProject.Infrastructure.Data.Models;
 using SkiProject.Infrastructure.Data.Models.Shop;
+using SendGrid.Helpers.Mail;
+using SendGrid;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNet.Identity;
 
 namespace SkiProject.Controllers
 {
     
     public class AccountController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-        public AccountController(UserManager<ApplicationUser> _userManager,
-            SignInManager<ApplicationUser> _signInManager)
+        private readonly IEmailSender emailSender;
+        public AccountController(Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager,
+            SignInManager<ApplicationUser> _signInManager,
+            IEmailSender _emailSender)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+           emailSender = _emailSender;
         }
 
         [HttpGet]
@@ -58,7 +65,8 @@ namespace SkiProject.Controllers
                 CreatedProducts = new List<Product>(),
                 CreatedAdvertisments = new List<Advertisment>(),
                 Messages = new List<Message>(),
-                ProfileCreatedOn=DateTime.Now
+                ProfileCreatedOn=DateTime.Now,
+                Gender = model.Gender
             };
             //When creating user with password
             //If we are creating an user without a password=>(user)
@@ -69,8 +77,12 @@ namespace SkiProject.Controllers
             if (result.Succeeded)
             {
                 //isPersistent on the registration false, changes the cookie 
-                await signInManager.SignInAsync(user, isPersistent: false);
-               
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+                await emailSender.SendEmailAsync(user.Email,"Confirm your account",
+                    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                //await signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -81,6 +93,29 @@ namespace SkiProject.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+                return View("Error");
+            var result = await userManager.ConfirmEmailAsync(user, token);
+            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+        }
+
+        [HttpGet]
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult SuccessRegistration()
+        {
+            return View();
+        }
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -112,6 +147,7 @@ namespace SkiProject.Controllers
 
                 if (result.Succeeded)
                 {
+                    await emailSender.SendEmailAsync(user.Email, "Welcome email", "Welcome to Ski Forum");
                     if (model.ReturnUrl != null)
                     {
                         //When the user is trying to access a page without login

@@ -7,8 +7,17 @@
                 <div class="card" style="border-radius: 15px;">
                     <div class="card-body text-center">
                         <div class="mt-3 mb-4">
+                            @if (Model.Gender=="female")
+                        {
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
+                            class="rounded-circle img-fluid" style="width: 100px;" />
+                        }
+                        else
+                        {
+                            <img src="https://i.ibb.co/KN9z19k/male-Avatar.png"
                                  class="rounded-circle img-fluid" style="width: 100px;" />
+                        }
+
                         </div>
                         <h4 class="mb-2">@Model.UserName</h4>
                        
@@ -22,11 +31,11 @@
                         <div class="d-flex justify-content-between text-center mt-5 mb-2">
                             <div>
                                 <p class="mb-2 h5">Birthday</p>
-                                <p class="text-muted mb-0">@Model.Birthday.Date</p>
+                                <p class="text-muted mb-0">@Model.Birthday.ToShortDateString()</p>
                             </div>
                             <div class="px-3">
                                 <p class="mb-2 h5">Registered on:</p>
-                                <p class="text-muted mb-0">@Model.CreatedOn.Date</p>
+                                <p class="text-muted mb-0">@Model.CreatedOn.ToShortDateString()</p>
                             </div>
                         </div>
                     </div>

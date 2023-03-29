@@ -80,21 +80,31 @@ namespace SkiProject.Controllers
         {
             var sanitizer = new HtmlSanitizer();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await accountService.GetCurrentUserById(userId);
             var topicTitle = currentTopicTitle;
             var topic = await postService.GetCurrentTopic(topicTitle);
 
             var model = new PostViewModel()
             {
-                UserId =sanitizer.Sanitize( userId),
-                User = await accountService.GetCurrentUserById(userId),
+                UserId =userId,
+                User = user,
                 Date = DateTime.Now,
                 Topic = topic,
                 TopicId = topic.Id,
                 Content=sanitizer.Sanitize(DTOmodel.Content),
                 CurrentTopic=topicTitle,
-                Posts= await postService.GetAllPosts(topic.Id)
+                Posts= await postService.GetAllPosts(topic.Id),
+                Username=user.UserName
             };
-           
+
+            string message;
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    message = error.ErrorMessage;
+                }
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);

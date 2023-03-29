@@ -11,5 +11,6 @@ namespace SkiProject.Core.Models
         public string UserName { get; set; }
         public DateTime Birthday { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string Gender { get; set; } = null!;
     }
 }

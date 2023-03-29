@@ -70,11 +70,25 @@
                                          <label asp-for="Birthdate"></label>
                                          <span asp-validation-for="Birthdate" class="text-danger"></span>
                                     </div>
+                                    <fieldset>
+                                        <legend>I'am:</legend>
+                                        <div>
+                                                <input asp-for="Gender" type="radio"  value="male"/>
+                                                <label asp-for="Gender">Male</label>
+                                                <span asp-validation-for="Gender" class="text-danger"></span>
+                                         </div>
+                                         <div>
+                                                <input asp-for="Gender" type="radio" value="female" />
+                                                <label asp-for="Gender">Female</label>
+                                                <span asp-validation-for="Gender" class="text-danger"></span>
+                                        </div>
+                                    </fieldset>
                                         <div class="d-flex justify-content-end pt-3">
                                         <button type="button" class="btn btn-light btn-lg">Reset all</button>
                                         <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>
                                         </div>
                                 </div>
+                                
                                 </form>
                             </div>
                         </div>

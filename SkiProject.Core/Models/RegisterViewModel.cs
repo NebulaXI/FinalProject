@@ -37,7 +37,7 @@ namespace SkiProject.Core.Models
         [UserAge]
         public DateTime Birthdate { get; set; }
 
-        //[Required]
-        //public string Gender { get; set; }
+        [Required]
+        public string Gender { get; set; } = null!;
     }
 }
